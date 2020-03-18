@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cancelation_msg: MyText
+  user: one
+
+two:
+  cancelation_msg: MyText
+  user: two
