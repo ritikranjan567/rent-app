@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  price: 1
+  payment_period: MyString
+  dimension: MyString
+  description: MyText
+  rentable_duration: MyString
+  event_tags: MyString
+  booking_type: MyString
+  available: false
+
+two:
+  name: MyString
+  price: 1
+  payment_period: MyString
+  dimension: MyString
+  description: MyText
+  rentable_duration: MyString
+  event_tags: MyString
+  booking_type: MyString
+  available: false
