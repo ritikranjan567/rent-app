@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RentApp</title>
+    <title>Rent N Event</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <header class="container-fluid fixed" id="application_header">
+      <h2 id="website_name">Rent N Event</h2>
+    </header>
+    
+    <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key.to_s %>">
+        <%= value %>
+      </div>
+    <% end %>
+
+    <div class="content container-fluid">
+      <%= yield %>
+    </div>
   </body>
 </html>

@@ -14,3 +14,12 @@
  *= require_self
  */
  @import 'bootstrap/dist/css/bootstrap';
+
+ @import url('https://fonts.googleapis.com/css?family=Emblema One');
+ #application_header{
+   background-color: crimson;
+   top: 0em;
+ }
+ #website_name{
+   font-family: 'Emblema One';
+ }
