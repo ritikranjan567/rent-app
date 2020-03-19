@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_18_124351) do
+ActiveRecord::Schema.define(version: 2020_03_19_105923) do
 
   create_table "assets", force: :cascade do |t|
     t.string "name"
@@ -28,19 +28,12 @@ ActiveRecord::Schema.define(version: 2020_03_18_124351) do
     t.index ["user_id"], name: "index_assets_on_user_id"
   end
 
-  create_table "booked_assets", force: :cascade do |t|
-    t.integer "asset_id"
-    t.integer "booking_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["booking_id"], name: "index_booked_assets_on_booking_id"
-  end
-
   create_table "bookings", force: :cascade do |t|
     t.text "cancelation_msg"
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "booked_asset_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
@@ -97,12 +90,25 @@ ActiveRecord::Schema.define(version: 2020_03_18_124351) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
     t.integer "phone_number"
-    t.string "email"
-    t.string "encrypted_password"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "wished_assets", force: :cascade do |t|
@@ -121,7 +127,6 @@ ActiveRecord::Schema.define(version: 2020_03_18_124351) do
   end
 
   add_foreign_key "assets", "users"
-  add_foreign_key "booked_assets", "bookings"
   add_foreign_key "bookings", "users"
   add_foreign_key "events", "requests"
   add_foreign_key "locations", "assets"
