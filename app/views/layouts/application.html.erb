@@ -11,17 +11,49 @@
   </head>
 
   <body>
-    <header class="container-fluid fixed" id="application_header">
-      <h2 id="website_name">Rent N Event</h2>
-    </header>
-    
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="application_nav">
+      <%= link_to 'Rent N Event', root_path, class: "navbar-brand", id: "brand_name" %>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+
+        <%= form_tag('#', method: :get, class: "form-inline") do %>
+          <%= text_field_tag(:search, params[:search], class: "mr-sm-2", placeholder: "Location or Event") %>
+          <%= button_tag :submit, class: "btn btn-success" do %>
+            <i class="fa fa-search"></i> Search
+          <% end %>
+        <% end %>
+        <% if !user_signed_in? %>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item custom-hover">
+              <%= link_to 'Sign Up', new_user_registration_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item custom-hover">
+              <%= link_to 'Login', new_user_session_path, class: "nav-link" %>
+            </li>
+          </ul>
+          <% else %>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <span class="dropdown-toggle" data-toggle="dropdown"><%= image_tag current_user.profile_picture, alt: "default_profile_pic.png", id: "nav_profile_pic" %></span>
+              <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to 'Edit Profile', edit_user_registration_path, class: "dropdown-item" %>
+                <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+              </div>
+            </li>
+          </ul>
+        <% end %>
+
+      </div>              
+    </nav>
     <% flash.each do |key, value| %>
       <div class="alert alert-<%= key.to_s %>">
         <%= value %>
       </div>
     <% end %>
 
-    <div class="content container-fluid">
+    <div class="container-fluid" id="content">
       <%= yield %>
     </div>
   </body>

@@ -13,13 +13,51 @@
  *= require_tree .
  *= require_self
  */
- @import 'bootstrap/dist/css/bootstrap';
+ @import 'bootstrap';
 
- @import url('https://fonts.googleapis.com/css?family=Emblema One');
- #application_header{
+ @import url('https://fonts.googleapis.com/css?family=Galindo');
+ @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+ 
+ #application_nav{
    background-color: crimson;
-   top: 0em;
  }
- #website_name{
-   font-family: 'Emblema One';
+
+ #brand_name{
+   font-family: 'Galindo';
+   color: rgb(245, 252, 233);
+ }
+
+ #content{
+   margin-top: 3.5rem;
+ }
+
+ .custom-hover:hover{
+   background-color: rgb(189, 17, 51);
+ }
+
+ #signup_container{
+   background-color: wheat;
+   margin-top: 5rem;
+   border-radius: 1.5rem;
+ }
+
+ .profile-upload > input{
+   display: none;
+ }
+
+ .profile-upload > label{
+   cursor: pointer;
+ }
+
+ .profile-upload img{
+   height: 10rem;
+   width: 10rem;
+   border-radius: 50%;
+ }
+
+ #nav_profile_pic{
+   border-radius: 50%;
+   height: 3rem;
+   width: 3rem;
+   cursor: pointer;
  }
