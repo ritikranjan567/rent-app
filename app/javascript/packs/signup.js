@@ -15,21 +15,7 @@ var Validator = (function(){
       return true;
     }
   };
-
-  var _validatePhoneNumber = function(phoneNumber){
-    if (phoneNumber.length == 0){
-      messages.phoneNumber = "Enter the phone number";
-      return false;
-    }
-    else if (!(/[0-9]{4,13}$/.test(phoneNumber))){
-      messages.phoneNumber = "Unsupported Phone Number";
-      return false;
-    }
-    else{
-      return true;
-    }
-  };
-
+  
   var _validateEmail = function(email){
     var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (email.length == 0){
@@ -84,7 +70,6 @@ var Validator = (function(){
 
   return {
     validateName: _validateName,
-    validatePhoneNumber: _validatePhoneNumber,
     validateEmail: _validateEmail,
     validatePasswordStrength: _validatePasswordStrength,
     validateConfirmPassword: _validateConfirmPassword
@@ -99,6 +84,7 @@ function signup_warn(element, validatorFunction, messageType) {
     .css({"display": "inline", "color": "red"})
     .next().text(messages[messageType]).css({"display": "block", "color": "red"});
   }
+  // this is just for password strength check...
   else if (messages.password == "Medium" || messages.password == "Weak"){
     element.css("border", "0.165rem solid orange")
     .next().attr("class", "feedback-icon fa fa-exclamation")
@@ -125,10 +111,6 @@ $(document).on("turbolinks:load", function(){
   });
   $("#user_last_name").on("keyup", function(){
     signup_warn($(this), Validator.validateName, "name");
-  });
-
-  $("#user_phone_number").on("keyup", function(){
-    signup_warn($(this), Validator.validatePhoneNumber, "phoneNumber");
   });
 
   $("#user_email").on("keyup", function(){

@@ -7,7 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/authy-form-helpers/2.3/form.authy.min.css', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/authy-form-helpers/2.3/form.authy.min.js', 'data-turbolinks-track': 'reload'%>
+
   </head>
 
   <body>
@@ -48,7 +51,9 @@
       </div>              
     </nav>
     <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key.to_s %>" id="alert_info">
+      <% key = key_convert(key) %>
+      <div class="alert alert-<%= key.to_s %> alert-dismissible" id="alert_info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
         <%= value %>
       </div>
     <% end %>

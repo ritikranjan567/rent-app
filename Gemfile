@@ -23,6 +23,9 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt', '~> 3.1.7'
 #use devise for user account authentication and handling..
 gem 'devise', '~> 4.2'
+#For user phone number verification
+gem 'envyable'
+gem 'authy'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

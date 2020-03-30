@@ -27,16 +27,16 @@
  }
 
  #content{
-   margin-top: 3.6rem;
+   margin-top: 3.3rem;
  }
 
  .custom-hover:hover{
    background-color: rgb(189, 17, 51);
  }
 
- #signup_container{
-   background-color: wheat;
-   margin-top: 5rem;
+ .user-container{
+   background-image: linear-gradient(90deg, rgb(80, 217, 255) 0%, #92FE9D 100%);
+   margin-top: 4rem;
    border-radius: 1.5rem;
  }
 
@@ -69,4 +69,20 @@
    right: 1.2rem;
    margin-top: 0.6rem;
    display: none;
+ }
+ .feedback-warning{
+   margin-left: 1rem;
+ }
+ .user-container input:not([type='submit']){
+   border-radius: 3rem;
+   background-color: rgba(255, 255, 255, 0.5);
+ }
+
+ .actions input{
+   border-radius: 1rem;
+ }
+
+ #error_explanation{
+   background-color: rgba(255, 0, 0, 0.3);
+   color: red;
  }
