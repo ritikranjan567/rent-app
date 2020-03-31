@@ -1,2 +1,0 @@
-class PhoneVerificationController < ApplicationController
-end

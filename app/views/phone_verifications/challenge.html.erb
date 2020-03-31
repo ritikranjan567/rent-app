@@ -1,0 +1,21 @@
+<div class="container col-sm-5 verification-div">
+  <div class="text-center">
+    <h3>Verification</h3>
+  </div>
+
+  <%= form_tag(verify_phone_verifications_path, method: :post) do -%>
+    <% if @response %>
+      <% @response.errors.each do |key, message| %>
+        <p> <%= message %> </p>
+      <% end %>      
+    <% end %>
+
+    <div class="form-group">
+      <%= label_tag :code, "Enter the sent code:" %>
+      <%= text_field_tag :code, nil, class: "form-control"%>
+    </div>
+    <div class="actions">
+      <%= button_tag "Verify", class: "btn btn-primary form-control" %>
+    </div>
+  <% end %>
+</div>

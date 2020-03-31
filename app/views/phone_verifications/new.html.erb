@@ -1,0 +1,29 @@
+<div class="container col-sm-5 verification-div">
+  <div class="text-center"> <h2>Verify your phone number</h2> </div>
+  <%= form_tag(phone_verifications_path, method: :post) do -%>
+    <% if @response %>
+      <% @response.errors.each do |key, message| %>
+        <p><%= message %></p>
+      <% end %>
+    <% end %>
+
+    <div class= form-group>
+      <%= label_tag :phone_number, "Phone Number:" %>
+      <div class="form-inline">
+        <%= select_tag "authy-countries", nil, name: "country_code", "data-show-as": "number" %>
+        <%= telephone_field_tag :phone_number, nil, name: "phone_number" %>
+      </div>
+    </div>
+
+    <div>
+      <p>Choose verification method:</p>
+      <%= label_tag "method_sms", "SMS: " %>
+      <%= radio_button_tag "method", "sms" %>
+      <%= label_tag "method_call", "Call: " %>
+      <%= radio_button_tag "method", "call" %>
+    </div>
+    <div class="actions">
+      <%= button_tag "Verify", class: "btn btn-primary form-control" %>
+    </div>
+  <% end %>
+</div>

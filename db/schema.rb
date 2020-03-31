@@ -129,7 +129,7 @@ ActiveRecord::Schema.define(version: 2020_03_30_163852) do
     t.string "unlock_token"
     t.datetime "locked_at"
     t.string "country_code"
-    t.boolean "phone_verification_status"
+    t.boolean "phone_verification_status", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

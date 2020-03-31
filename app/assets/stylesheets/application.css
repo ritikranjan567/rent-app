@@ -86,3 +86,16 @@
    background-color: rgba(255, 0, 0, 0.3);
    color: red;
  }
+
+ .actions{
+   padding-bottom: 0.5rem;
+ }
+
+ #countries-input-0{
+   width: 3.4rem;
+ }
+
+ #phone_number{
+   margin-left: 0.3rem;
+   width: calc(100% - 3.8rem);
+ }
