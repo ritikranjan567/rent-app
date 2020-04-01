@@ -16,6 +16,10 @@
  @import 'bootstrap';
  @import url('https://fonts.googleapis.com/css?family=Galindo');
  @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+ body{
+   background-image: url(bg\ main.png);
+   background-repeat: repeat;
+ }
  
  #application_nav{
    background-color: crimson;
@@ -35,7 +39,7 @@
  }
 
  .user-container{
-   background-image: linear-gradient(90deg, rgb(80, 217, 255) 0%, #92FE9D 100%);
+   background-image: linear-gradient(to right, rgba(235,233,249,0.6) 0%, rgba(216,208,239,0.6) 44%, rgba(206,199,236,0.6) 53%, rgba(193,191,234,0.6) 90%);
    margin-top: 4rem;
    border-radius: 1.5rem;
  }
