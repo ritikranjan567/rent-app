@@ -26,6 +26,8 @@ gem 'devise', '~> 4.2'
 #For user phone number verification
 gem 'envyable'
 gem 'authy'
+#use for geolocations and maps
+gem 'geocoder'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

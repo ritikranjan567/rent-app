@@ -19,6 +19,7 @@
  body{
    background-image: url(bg\ main.png);
    background-repeat: repeat;
+   background-attachment: fixed;
  }
  
  #application_nav{
@@ -53,8 +54,8 @@
  }
 
  .profile-upload img{
-   height: 10rem;
-   width: 10rem;
+   height: 8rem;
+   width: 8rem;
    border-radius: 50%;
  }
 
@@ -65,14 +66,28 @@
    cursor: pointer;
  }
 
+ .names{
+   padding: 0;
+ }
+
  #alert_info{
    margin-top: 3.6rem;
  }
  .feedback-icon{
    position: absolute;
-   right: 1.2rem;
+   right: 1.4rem;
    margin-top: 0.6rem;
    display: none;
+ }
+
+ .names span{
+  position: absolute;
+  right: 0.8rem;
+  margin-top: 0.6rem; 
+ }
+
+ .names-container{
+   display: flex;
  }
  .feedback-warning{
    margin-left: 1rem;

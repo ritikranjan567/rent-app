@@ -13,16 +13,25 @@
   
   <div class="form-group">
     <%= f.label :first_name, "First Name:", class: "control-label" %>
-    <%= f.text_field :first_name, placeholder: "First Name..", class: "form-control", required: true, style: "display: inline;" %>
-    <span class="feedback-icon fa fa-check"></span>
-    <div class="feedback-warning"></div>
+    <div class="names-container">
+      <div class="col-sm-6 names">
+        <%= f.text_field :first_name, placeholder: "First Name..", class: "form-control", required: true, style: "display: inline; margin-right: 0.15rem; width: calc(100% - 0.15rem);" %>
+        <span class="feedback-icon fa fa-check"></span>
+        <div class="feedback-warning"></div>
+      </div>
+      <div class="col-sm-6 names">
+        <%= f.text_field :last_name , placeholder: "Last Name..", class: "form-control", required: true, style: "display: inline; margin-left: 0.15rem; width: calc(100% - 0.15rem);" %>
+        <span class="feedback-icon fa fa-check"></span>
+        <div class="feedback-warning"></div>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
+  <!--<div class="form-group">
     <%= f.label :last_name, "Last Name:" %>
     <%= f.text_field :last_name , placeholder: "Last Name..", class: "form-control", required: true, style: "display: inline;" %>
     <span class="feedback-icon fa fa-check"></span>
     <div class="feedback-warning"></div>
-  </div>
+  </div> -->
 
   <div class="form-group">
     <%= f.label :email, "Email:" %>
