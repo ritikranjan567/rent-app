@@ -20,24 +20,24 @@
           <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
-
         <%= form_tag('#', method: :get, class: "form-inline") do %>
-          <%= text_field_tag(:search, params[:search], class: "mr-sm-2", placeholder: "Location or Event") %>
-          <%= button_tag :submit, class: "btn btn-success" do %>
-            <i class="fa fa-search"></i> Search
-          <% end %>
+          <div class="search-form">
+            <%= text_field_tag(:search, params[:search], class: "form-control", placeholder: "Location or Event") %>
+            <%= button_tag :submit, class: "btn btn-success" do %>
+              <i class="fa fa-search"></i>
+            <% end %>
+          </div>
         <% end %>
-        <% if !user_signed_in? %>
-          <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto">
+          <%= link_to 'Advertise', new_asset_path, class: "nav-link btn btn-dark btn-lg fa fa-bullhorn" %>
+          <% if !user_signed_in? %>
             <li class="nav-item custom-hover">
               <%= link_to 'Sign Up', new_user_registration_path, class: "nav-link" %>
             </li>
             <li class="nav-item custom-hover">
               <%= link_to 'Login', new_user_session_path, class: "nav-link" %>
             </li>
-          </ul>
-          <% else %>
-          <ul class="navbar-nav ml-auto">
+            <% else %>
             <li class="nav-item dropdown">
               <span class="dropdown-toggle" data-toggle="dropdown"><%= image_tag current_user.profile_picture, alt: "default_profile_pic.png", id: "nav_profile_pic" %></span>
               <div class="dropdown-menu dropdown-menu-right">
@@ -46,8 +46,8 @@
                 <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "dropdown-item" %>
               </div>
             </li>
-          </ul>
-        <% end %>
+          <% end %>
+        </ul>
 
       </div>              
     </nav>

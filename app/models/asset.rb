@@ -4,5 +4,5 @@ class Asset < ApplicationRecord
   has_one :rating, dependent: :destroy
   has_one :location, dependent: :destroy
   has_many :requests, dependent: :destroy
-  has_many_attached :pictures, limit: { max: 5}
+  has_many_attached :pictures
 end

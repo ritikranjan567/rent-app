@@ -20,3 +20,16 @@ require('packs/signup')
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+//only for alert messages-------------------------------
+$(document).on("turbolinks:load", function(){
+  if ($("#alert_info").css("display") != "none"){
+    $("#content").css("margin-top", "0.5rem;");
+  }
+  else{
+    $("#content").css("margin-top", "3.3rem;");
+  }
+
+  $("#alert_info").fadeTo(3500, 500).slideUp(500, function(){ $(this).slideUp(500); });
+});
+//-----------------------------------------------------
