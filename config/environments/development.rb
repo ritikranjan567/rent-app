@@ -62,6 +62,8 @@ Rails.application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+  # for user assets this assets prefix has to be different..
+  config.assets.prefix = '/assetz'
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true

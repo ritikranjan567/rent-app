@@ -4,6 +4,9 @@
     <% if @asset.errors.any? %>
       <div class="alert alert-danger">
         <%= "Server found #{@asset.errors.count} validation errors" %>
+        <% @asset.errors.full_messages.each do |msg| %>
+          <%= msg %>
+        <% end %>
       </div>
     <% end %>
 
@@ -19,7 +22,7 @@
       </div>
       <div class="form-group">
         <%= f.label :description, "*Brief the Features:" %>
-        <%= f.text_area :description, class: "form-control", rows: 3, placeholder: "Brief condition, features, locality.." %>
+        <%= f.text_area :description, class: "form-control", rows: 3, placeholder: "Brief condition, features, locality and facilities" %>
       </div>
       <hr>
     </div>
@@ -29,10 +32,25 @@
       <div class="form-group">
         <%= f.label :price, "*Price:" %>
         <div class="form-inline">
-          <%= f.text_field :price, class: "form-control col-sm-8" %>
+          <%= f.select(:currency, ["\u20B9", "\u20AC", "\u00A5", "\u0024", "\u20BD", "\u3350"], {}, class: "form-control col-sm-2") %>
+          <%= f.text_field :price, class: "form-control col-sm-6" %>
           <%= f.select(:payment_period, ["Per Day", "Per Week", "Per Month", "Per Annum"], {}, class: "form-control col-sm-4") %>
         </div>
       </div>
+      <hr>
     </div>
+    <div class="container col-sm-11" id="asset_images">
+      <h3>Upload upto 6 images: </h3>
+        <div class="asset-pictures">
+          <label for="asset_pictures" class= "fa fa-plus btn btn-primary">
+            Add Photos
+          </label>
+          <%= f.file_field :pictures, multiple: true %>
+          <div class="preview-images">
+          </div>
+        </div>
+        <p style="font-size: 0.7rem; color: blue;">First image will be displayed while listing</p>
+    </div>
+    <%= f.submit "POST AD.", class: "btn btn-primary" %>
   <% end %>
 </div>

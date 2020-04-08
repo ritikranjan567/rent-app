@@ -1,3 +1,3 @@
 class Location < ApplicationRecord
-  belongs_to :asset
+  has_many :assets, dependent: :destroy
 end

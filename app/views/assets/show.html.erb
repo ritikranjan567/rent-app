@@ -1,0 +1,7 @@
+<h2> the asset </h2>
+<% if !@asset.pictures.any? %>
+  <%= "Nothing" %>
+<% end %>
+<% @asset.pictures.each do |p| %>
+  <%= image_tag p %>
+<% end %>

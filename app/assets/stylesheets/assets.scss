@@ -1,3 +1,45 @@
 // Place all the styles related to the assets controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.asset-pictures > input{
+  display: none;
+}
+
+.asset-pictures > .preview-images{
+  display: flex;
+}
+
+.asset-pictures > label{
+  cursor: pointer;
+}
+.asset-pictures .image-cancel{
+  font-size: 1.5rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  cursor: pointer;
+  display: none;
+}
+
+.asset-pictures > .preview-images > .preview-image{
+  margin-left: 0.7rem;
+  height: 10rem;
+  width: 10rem;
+  position: relative;
+  float: left;
+}
+
+.preview-image > img{
+  width: 100%;
+  height: 100%;
+}
+
+.preview-image:hover > .image-cancel{
+  display: block;
+}
+
+.preview-image:hover > img{
+  opacity: 0.6;
+}

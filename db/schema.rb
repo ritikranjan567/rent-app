@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_30_163852) do
+ActiveRecord::Schema.define(version: 2020_04_05_112204) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -46,6 +46,9 @@ ActiveRecord::Schema.define(version: 2020_03_30_163852) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
+    t.integer "location_id"
+    t.string "currency"
+    t.index ["location_id"], name: "index_assets_on_location_id"
     t.index ["user_id"], name: "index_assets_on_user_id"
   end
 
@@ -75,10 +78,8 @@ ActiveRecord::Schema.define(version: 2020_03_30_163852) do
     t.string "place"
     t.string "city"
     t.string "address"
-    t.integer "asset_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["asset_id"], name: "index_locations_on_asset_id"
   end
 
   create_table "notes", force: :cascade do |t|
@@ -152,10 +153,10 @@ ActiveRecord::Schema.define(version: 2020_03_30_163852) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "assets", "locations"
   add_foreign_key "assets", "users"
   add_foreign_key "bookings", "users"
   add_foreign_key "events", "requests"
-  add_foreign_key "locations", "assets"
   add_foreign_key "notes", "requests"
   add_foreign_key "ratings", "assets"
   add_foreign_key "requests", "assets"

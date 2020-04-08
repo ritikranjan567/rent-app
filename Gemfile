@@ -28,6 +28,8 @@ gem 'envyable'
 gem 'authy'
 #use for geolocations and maps
 gem 'geocoder'
+#for bootstrap
+gem 'bootstrap'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
