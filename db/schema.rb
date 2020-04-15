@@ -76,10 +76,10 @@ ActiveRecord::Schema.define(version: 2020_04_05_112204) do
     t.float "longitude"
     t.float "latitude"
     t.string "place"
-    t.string "city"
-    t.string "address"
+    t.text "address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "pincode"
   end
 
   create_table "notes", force: :cascade do |t|

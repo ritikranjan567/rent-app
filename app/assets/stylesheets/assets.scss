@@ -43,3 +43,63 @@
 .preview-image:hover > img{
   opacity: 0.6;
 }
+
+.event-tags{
+  display: inline;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.remove-event-tag:hover{
+  cursor: pointer;
+}
+
+.event{
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
+  background-color: #f1b8b8;
+  border: 1px solid black;
+}
+
+#asset_images{
+  width: 100%;
+  height: 30rem;
+  overflow: hidden;
+}
+
+.show-asset-container img{
+  width: inherit;
+  height: 30rem;
+}
+#asset_title{
+  background-color: rgba(190, 240, 231, 0.4);
+}
+.show-event-tags{
+  background-color: rgba($color: #def0a0e0, $alpha: 1.0);
+  display: inline;
+  margin-right: 0.3rem;
+  padding: 0.3rem;
+  font-size: 1rem;
+}
+
+#asset_location_map{
+  width: 100%;
+  height: 20rem;
+}
+
+.marker{
+  background-image: url(map-pointer.png);
+  background-size: cover;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.marker-popup{
+  max-width: 10rem;
+}
+
+.marker-popup-content{
+  text-align: center;
+}

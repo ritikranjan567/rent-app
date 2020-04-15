@@ -1,7 +1,55 @@
-<h2> the asset </h2>
-<% if !@asset.pictures.any? %>
-  <%= "Nothing" %>
-<% end %>
-<% @asset.pictures.each do |p| %>
-  <%= image_tag p %>
-<% end %>
+<div class="show-asset-container container col-sm-10">
+  <div id="asset_images" class="carousel slide text-center" data-ride="carousel">
+    <!-- Indicators -->
+    <ul class="carousel-indicators">
+      <% @asset.pictures.count.times do |i| %>
+        <li data-target="#asset_images" data-slide-to=<%= i.to_s %> class=<%= active_class(i) %> > </li>
+      <% end %>
+    </ul>
+
+    <!-- slide show -->
+    <div class="carousel-inner">
+      <% i = 0 %>
+      <% @asset.pictures.each do |img| %>
+        <div class="carousel-item <%= active_class(i) %>">
+          <%= image_tag img, alt: "Missing images"%>
+        </div>
+        <% i = i + 1 %>
+      <% end %>
+    </div>
+
+    <!-- Left right controls -->
+    <a href="#asset_images" data-slide="prev" class="carousel-control-prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a href="#asset_images" data-slide="next" class="carousel-control-next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+  <hr>
+  <div id="asset_title"><h3><strong> <%= @asset.name %> </strong></h3></div>
+  <div id="show_asset_tags">
+    <% @asset.event_tags.each do |tag| %>
+      <div class="show-event-tags"> <%= tag %> </div>
+    <% end %>
+    <hr>
+  </div>
+  <div class="row asset-description">
+    <div class="col-sm-5" style="border-right: 1px solid black;">
+      <strong>Dimension:</strong> <br>
+      <%= @asset.dimension %>
+    </div>
+    <div class="col-sm-7">
+      <strong>Features and description:</strong> <br>
+      <%= @asset.description %>
+    </div>
+  </div>
+
+  <div id="show-asset-location">
+    <div id="asset_location_map">
+      <div id="coordinates" style="display: none;"> <%= @asset.location.latitude %>, <%= @asset.location.longitude %> </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_pack_tag 'showAsset' %>

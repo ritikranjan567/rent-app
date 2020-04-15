@@ -1,9 +1,9 @@
 class AssetsController < ApplicationController
 
   before_action :ensure_authorized_user, only: [:new, :create, :destroy]
-  skip_before_action :verify_authenticity_token
 
   def index
+    @assets = Asset.first(20)
   end
 
   def new
@@ -13,8 +13,9 @@ class AssetsController < ApplicationController
   def create
     @asset = Asset.new(asset_params)
     @asset.user = current_user
-    @location = Location.create!(address: "BBSR")
+    @location = Location.create!(address: params[:address], place: params[:place], pincode: params[:pincode])
     @asset.location = @location
+    @asset.event_tags = params[:event_tags].split(" ")
     if @asset.save
       flash[:notice] = "Asset posted successfully."
       redirect_to asset_path(@asset)
@@ -37,7 +38,7 @@ class AssetsController < ApplicationController
   end
 
   def asset_params
-    params.require(:asset).permit(:name, :dimension, :description, :currency, :price, :payment_period, pictures: [])
+    params.require(:asset).permit(:name, :dimension, :description, :currency, :price, :payment_period, :booking_type, pictures: [])
   end
   
 end

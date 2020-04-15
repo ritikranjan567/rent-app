@@ -1,0 +1,13 @@
+<div class="card asset-cards col-sm-3">
+  <%= image_tag asset.pictures.first, alt: "Card Image", class: "card-img-top" %>
+  <div class="card-body">
+    <h4 class="card-title"><%= asset.name %></h4>
+    <div>
+      <% asset.event_tags.each do |event| %>
+        <span class="event"> <%= event %> </span>
+      <% end %>
+    </div>
+    <p class="card-text"> <%= asset.description %> </p>
+    <%= link_to 'See it', asset_path(asset), class: "btn btn-success col-sm-12" %>
+  </div>
+</div>
