@@ -39,10 +39,9 @@ ActiveRecord::Schema.define(version: 2020_04_05_112204) do
     t.string "payment_period"
     t.string "dimension"
     t.text "description"
-    t.string "rentable_duration"
     t.string "event_tags"
     t.string "booking_type"
-    t.boolean "available"
+    t.boolean "available", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
@@ -79,6 +78,7 @@ ActiveRecord::Schema.define(version: 2020_04_05_112204) do
     t.text "address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "city"
     t.string "pincode"
   end
 

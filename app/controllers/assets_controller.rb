@@ -13,7 +13,7 @@ class AssetsController < ApplicationController
   def create
     @asset = Asset.new(asset_params)
     @asset.user = current_user
-    @location = Location.create!(address: params[:address], place: params[:place], pincode: params[:pincode])
+    @location = Location.create!(address: params[:address], city: params[:city], place: params[:place], pincode: params[:pincode])
     @asset.location = @location
     @asset.event_tags = params[:event_tags].split(" ")
     if @asset.save

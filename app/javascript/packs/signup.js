@@ -100,11 +100,15 @@ function signup_warn(element, validatorFunction, messageType) {
 }
 
 $(document).on("turbolinks:load", function(){
+  /* Getting the image and previewing */
   $("#user_profile_picture").on("change", function(event){
     //console.log("Getting the image..");
     
     $("#upload_profile_pic").attr("src", URL.createObjectURL(event.target.files[0]));
   });
+  /* ------------------------------------------------------------------------------------ */
+
+
 
   $("#user_first_name").on("keyup", function(){
     signup_warn($(this), Validator.validateName, "name");
@@ -125,4 +129,15 @@ $(document).on("turbolinks:load", function(){
     signup_warn($(this), Validator.validateConfirmPassword, "confirmPassword");
   });
 
+  /* delete profile picture while editing */
+
+  $("#remove_profile_picture").on("click", function(){
+    $("#upload_profile_pic").attr("src", "/profile_img.png");
+    $("#user_profile_picture").val("");
+    $.ajax({
+      url: "/deleteprofilepic",
+      type: "DELETE"
+    });
+  });
+  /* --------------------------------------------------- */
 });

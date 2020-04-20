@@ -13,7 +13,7 @@
     <div class="container col-sm-11" id="asset_details">
       <%= label_tag :add_asset_tags, "*Add atleat one Event tag:" %>
       <div class="view-event-tags"></div>
-      <%= text_field_tag :event_tags, nil, style: "display: none;" %>
+      <%= text_field_tag :event_tags, nil, style: "display: none;", required: true %>
       <div class="form-inline">
         <%= text_field_tag :add_asset_tags, nil, class: "form-control col-sm-9", placeholder: "E.g: Party, Parking, Sport, Get Together..", list: "suggestions" %>
         <datalist id="suggestions">
@@ -29,15 +29,20 @@
       <h3>Enter few features and details: </h3>
       <div class="form-group">
         <%= f.label :name, "*Name Your Place:" %>
-        <%= f.text_field :name, class: "form-control", placeholder: "Give a name to your place. E.g (Peterson's Garage, Game Space)" %>
+        <%= f.text_field :name, class: "form-control", placeholder: "Give a name to your place. E.g (Peterson's Garage, Game Space)", required: true %>
+        <div class="feedback-warning"></div>
       </div>
       <div class="form-group">
         <%= f.label :dimension, "*Dimensions of the Place:" %>
-        <%= f.text_field :dimension, class: "form-control", placeholder: "Dimensions E.g (22m X 32m, length: 50ft and breadth: 60ft)" %>
+        <%= f.text_field :dimension, class: "form-control", placeholder: "E.g (22m X 32m, 50ft. x 20ft..)", required: true %>
+        <p style="font-size: 0.7rem; color: blue;"> Enter dimension Formate: (Length x breadth) </p>
+        <div class="feedback-warning"></div>
       </div>
       <div class="form-group">
         <%= f.label :description, "*Brief the Features:" %>
-        <%= f.text_area :description, class: "form-control", rows: 3, placeholder: "Brief condition, features, locality and facilities" %>
+        <%= f.text_area :description, class: "form-control", rows: 3, placeholder: "Brief condition, features, locality and facilities (Min: 20 charecters)", required: true %>
+        <p style="font-size: 0.7rem; color: blue;"> This will help viewer to have proper idea of your asset, exactly what benefits and features the user will be getting.</p>
+         <div class="feedback-warning"></div>
       </div>
       <div class="form-inline">
         <%= f.label :booking_type, "Open or Request to book:" %>
@@ -47,14 +52,15 @@
       <hr>
     </div>
 
-    <div class="container col-sm-11" id="asset_price">
+    <div class="container col-sm-11" id="price">
       <h3>Set the pricing: </h3>
       <div class="form-group">
         <%= f.label :price, "*Price:" %>
         <div class="form-inline">
           <%= f.select(:currency, ["\u20B9", "\u20AC", "\u00A5", "\u0024", "\u20BD", "\u3350"], {}, class: "form-control col-sm-2") %>
-          <%= f.text_field :price, class: "form-control col-sm-6" %>
+          <%= f.text_field :price, class: "form-control col-sm-6", required: true %>
           <%= f.select(:payment_period, ["Per Day", "Per Week", "Per Month", "Per Annum"], {}, class: "form-control col-sm-4") %>
+          <div class="feedback-warning"></div>
         </div>
       </div>
       <hr>
@@ -76,12 +82,19 @@
       <h3>Location Details:</h3>
       <div class="form-group">
         <%= label_tag :address, "*Address:" %>
-        <%= text_area_tag :address, nil, placeholder: "Enter plot no., landmark, road/lane, Floor no. E.g: Plot no- xx, Lane-xx, Near Landmark", class: "form-control", rows: 3 %>
+        <%= text_field_tag :address, nil, placeholder: "Enter plot no., landmark, road/lane, Floor no.", class: "form-control", rows: 3 %>
+        <div class="feedback-warning"></div>
+      </div>
+      <div class="form-group">
+        <%= label_tag :place, "*Place/Street Name:" %>
+        <%= text_field_tag :place, nil, placeholder: "Area, Street or square name", class: "form-control" %>
+        <div class="feedback-warning"></div>
       </div>
       <div style="display: flex;">
         <div class="form-group col-sm-9" style="padding-left: 0;">
-          <%= label_tag :place, "*Town/City Location:"%>
-          <%= text_field_tag :place, nil, placeholder: "Enter Locality/town/city", class: "form-control"%>
+          <%= label_tag :city, "*City:"%>
+          <%= text_field_tag :city, nil, placeholder: "City name", class: "form-control"%>
+          <div class="feedback-warning"></div>
         </div>
         <div class="form-group col-3" style="padding-right: 0;">
           <%= label_tag :pincode, "*Pincode:" %>

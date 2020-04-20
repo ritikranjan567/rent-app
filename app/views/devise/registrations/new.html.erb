@@ -1,4 +1,4 @@
-<div class="container col-sm-5 signup user-container">
+<div class="container col-sm-6 signup user-container">
   <div class="text-center"><h2>Sign up</h2></div>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -12,31 +12,25 @@
   </div>
   
   <div class="form-group">
-    <%= f.label :first_name, "First Name:", class: "control-label" %>
+    <%= f.label :first_name, "Name:", class: "control-label" %>
     <div class="names-container">
       <div class="col-sm-6 names">
         <%= f.text_field :first_name, placeholder: "First Name..", class: "form-control", required: true, style: "display: inline; margin-right: 0.15rem; width: calc(100% - 0.15rem);" %>
-        <span class="feedback-icon fa fa-check"></span>
+        <span class="feedback-icon"></span>
         <div class="feedback-warning"></div>
       </div>
       <div class="col-sm-6 names">
         <%= f.text_field :last_name , placeholder: "Last Name..", class: "form-control", required: true, style: "display: inline; margin-left: 0.15rem; width: calc(100% - 0.15rem);" %>
-        <span class="feedback-icon fa fa-check"></span>
+        <span class="feedback-icon"></span>
         <div class="feedback-warning"></div>
       </div>
     </div>
   </div>
-  <!--<div class="form-group">
-    <%= f.label :last_name, "Last Name:" %>
-    <%= f.text_field :last_name , placeholder: "Last Name..", class: "form-control", required: true, style: "display: inline;" %>
-    <span class="feedback-icon fa fa-check"></span>
-    <div class="feedback-warning"></div>
-  </div> -->
 
   <div class="form-group">
     <%= f.label :email, "Email:" %>
     <%= f.email_field :email, autocomplete: "email", placeholder: "example@mail.com", class: "form-control", required: true, style: "display: inline;"%>
-    <span class="feedback-icon fa fa-check"></span>
+    <span class="feedback-icon"></span>
     <div class="feedback-warning"></div>
   </div>
 
@@ -46,14 +40,14 @@
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
     <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password", class: "form-control", required: true, style: "display: inline;" %>
-    <span class="feedback-icon fa fa-check"></span>
+    <span class="feedback-icon"></span>
     <div class="feedback-warning"></div>
   </div>
 
   <div class="form-group">
     <%= f.label :password_confirmation, "Password Confirmation:" %>
     <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm Password", class: "form-control", required: true, style: "display: inline;" %>
-    <span class="feedback-icon fa fa-check"></span>
+    <span class="feedback-icon"></span>
     <div class="feedback-warning"></div>
   </div>
 

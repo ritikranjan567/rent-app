@@ -11,10 +11,6 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :phone_number, :profile_picture])
-  end
-
   def key_convert(key)
     if (flash[key].include? "success")
       "success"
@@ -23,5 +19,10 @@ class ApplicationController < ActionController::Base
     elsif (key.to_s == "alert")
       "warning"
     end
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :profile_picture])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :profile_picture])
   end
 end

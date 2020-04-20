@@ -44,7 +44,7 @@
             </li>
             <% else %>
             <li class="nav-item dropdown">
-              <span class="dropdown-toggle" data-toggle="dropdown"><%= image_tag current_user.profile_picture, alt: "default_profile_pic.png", id: "nav_profile_pic" %></span>
+              <span class="dropdown-toggle" data-toggle="dropdown"><%= image_tag place_profile_picture, alt: "default_profile_pic.png", id: "nav_profile_pic" %></span>
               <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-item"> <%= current_user.first_name %> </div> <hr>
                 <%= link_to 'Edit Profile', edit_user_registration_path, class: "dropdown-item" %>

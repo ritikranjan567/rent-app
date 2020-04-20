@@ -7,6 +7,6 @@ class Location < ApplicationRecord
   private
 
   def full_address
-    [place,pincode].compact.join(",")
+    [city, place, pincode].compact.join(",")
   end
 end
