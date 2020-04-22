@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_05_112204) do
+ActiveRecord::Schema.define(version: 2020_04_22_172257) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(version: 2020_04_05_112204) do
     t.string "dimension"
     t.text "description"
     t.string "event_tags"
-    t.string "booking_type"
     t.boolean "available", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -58,17 +57,6 @@ ActiveRecord::Schema.define(version: 2020_04_05_112204) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "booked_asset_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
-  end
-
-  create_table "events", force: :cascade do |t|
-    t.string "name"
-    t.date "start_date"
-    t.date "end_date"
-    t.text "description"
-    t.integer "request_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["request_id"], name: "index_events_on_request_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -108,6 +96,10 @@ ActiveRecord::Schema.define(version: 2020_04_05_112204) do
     t.integer "asset_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "event_name"
+    t.text "event_description"
+    t.date "event_start_date"
+    t.date "event_end_date"
     t.index ["asset_id"], name: "index_requests_on_asset_id"
   end
 
@@ -156,7 +148,6 @@ ActiveRecord::Schema.define(version: 2020_04_05_112204) do
   add_foreign_key "assets", "locations"
   add_foreign_key "assets", "users"
   add_foreign_key "bookings", "users"
-  add_foreign_key "events", "requests"
   add_foreign_key "notes", "requests"
   add_foreign_key "ratings", "assets"
   add_foreign_key "requests", "assets"

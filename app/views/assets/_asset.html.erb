@@ -7,7 +7,12 @@
         <span class="event"> <%= event %> </span>
       <% end %>
     </div>
-    <p class="card-text"> <%= asset.description %> </p>
+    <br>
+    <p class="card-text"> <%= asset.location.address %>  <%= asset.location.place %>, <%= asset.location.city %>, 
+    <%= asset.location.pincode %></p>
+    <div class="card-footer" id="display_price">
+      <%= asset.currency %> <%= asset.price %> <%= asset.payment_period %>
+    </div>
     <%= link_to 'See it', asset_path(asset), class: "btn btn-success col-sm-12" %>
   </div>
 </div>

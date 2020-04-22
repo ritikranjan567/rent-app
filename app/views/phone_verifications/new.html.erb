@@ -1,17 +1,20 @@
-<div class="container col-sm-5 verification-div">
-  <div class="text-center"> <h2>Verify your phone number</h2> </div>
+<div class="container col-sm-5 verification-div" id="phone_verification" >  
+  <div class="text-center">
+    <h2>Verify your phone number</h2>
+  </div>
+
+  
   <%= form_tag(phone_verifications_path, method: :post) do -%>
     <% if @response %>
       <% @response.errors.each do |key, message| %>
         <p><%= message %></p>
       <% end %>
     <% end %>
-
-    <div class= form-group>
+    <div class="form-group phone-verification">
       <%= label_tag :phone_number, "Phone Number:" %>
-      <div class="form-inline">
-        <%= select_tag "authy-countries", nil, name: "country_code", "data-show-as": "number" %>
-        <%= telephone_field_tag :phone_number, nil, name: "phone_number" %>
+      <div class="fields">
+        <%= text_field_tag :country_code, nil, class: "form-control", list: "cc", required: true, placeholder: "+91" %>
+        <%= telephone_field_tag :phone_number, nil, name: "phone_number", class: "form-control", required: true %>
       </div>
     </div>
 
@@ -25,5 +28,7 @@
     <div class="actions">
       <%= button_tag "Verify", class: "btn btn-primary form-control" %>
     </div>
-  <% end %>
+  <% end %> 
 </div>
+<%= javascript_pack_tag "phoneVerification" %>
+<datalist id="cc"></datalist>

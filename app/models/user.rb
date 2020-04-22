@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true
+  validates :phone_number, uniqueness: true
   #validates :phone_number, presence: true, uniqueness: true
   validates :first_name, :last_name, presence: true, length: {minimum:3}
   has_many :assets, dependent: :destroy

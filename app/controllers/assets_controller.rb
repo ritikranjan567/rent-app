@@ -1,6 +1,7 @@
 class AssetsController < ApplicationController
 
   before_action :ensure_authorized_user, only: [:new, :create, :destroy]
+  before_action :phone_number_verification, only: [:new, :create, :destroy], if: :user_signed_in?
 
   def index
     @assets = Asset.first(20)
@@ -38,7 +39,13 @@ class AssetsController < ApplicationController
   end
 
   def asset_params
-    params.require(:asset).permit(:name, :dimension, :description, :currency, :price, :payment_period, :booking_type, pictures: [])
+    params.require(:asset).permit(:name, :dimension, :description, :currency, :price, :payment_period, pictures: [])
+  end
+
+  def phone_number_verification
+    if !current_user.phone_verification_status
+      redirect_to new_phone_verification_path
+    end
   end
   
 end

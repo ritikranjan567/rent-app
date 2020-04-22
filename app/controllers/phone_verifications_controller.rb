@@ -18,7 +18,7 @@ class PhoneVerificationsController < ApplicationController
     if @response.ok?
       redirect_to challenge_phone_verifications_path
     else
-      render new
+      render "phone_verifications/new"
     end
   end
 

@@ -31,5 +31,8 @@ $(document).on("turbolinks:load", function(){
   }
 
   $("#alert_info").fadeTo(3500, 500).slideUp(500, function(){ $(this).slideUp(500); });
+
 });
 //-----------------------------------------------------
+
+

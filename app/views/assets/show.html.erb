@@ -44,12 +44,44 @@
       <%= @asset.description %>
     </div>
   </div>
+  <hr>
+  <h4>User Information</h4>
+  <div class="row" id="show_owner_info">
+    <div class="col-sm-2" style="padding-right: 0;">
+      <%= image_tag place_owner_profile_pic(@asset.user), alt: "profile picture" %>
+    </div>
+    <div class="col-sm-7" style="padding-left: 0;">
+      <p style="margin-top: 1.5rem; margin-bottom: 0;"><%= "#{@asset.user.first_name} #{@asset.user.last_name}" %></p>
+      <p style="color: blue; margin-bottom: 0;"><%= @asset.user.email %> </p>
+      <p> <%= "#{@asset.user.country_code} #{@asset.user.phone_number}" %> </p>
+    </div>
+  </div>
+  <hr>
 
   <div id="show-asset-location">
+    <h4>Location Details</h4>
     <div id="asset_location_map">
       <div id="coordinates" style="display: none;"> <%= @asset.location.latitude %>, <%= @asset.location.longitude %> </div>
     </div>
+    <div id="show_address" style="margin-top: 0.6rem;">
+      <strong>Address:</strong> <%= @asset.location.address %> <br>
+      <strong>Place:</strong> <%= @asset.location.place %>
+      <strong>City:</strong> <%= @asset.location.city %>
+      <strong>Pincode:</strong> <%= @asset.location.pincode %>
+    </div>
   </div>
+  <hr>
+  <div class="row">
+      <div class="col-sm-2" style="color: orange;">
+        <strong><%= "#{@asset.currency}#{@asset.price} #{@asset.payment_period}" %></strong>
+      </div>
+      <div class="col-sm-10">
+        <%= link_to "Request Booking", "#", class: "btn btn-primary", style: "float: right;"%>
+        <%= link_to "Back", assets_path, class: "btn btn-warning", style: "float: right; margin-right: 0.5rem;" %>
+      </div>
+  </div>
+  <hr>
 </div>
+
 
 <%= javascript_pack_tag 'showAsset' %>
