@@ -15,4 +15,8 @@ module ApplicationHelper
     "profile_img.png"
   end
 
+  def show_validation_error(data_object, symbol)
+    data_object.errors.messages[symbol][0] if data_object.errors.any?
+  end
+
 end

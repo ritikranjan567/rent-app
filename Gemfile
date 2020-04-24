@@ -31,6 +31,8 @@ gem 'geocoder'
 #for bootstrap
 gem 'bootstrap'
 
+#for smart search results
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
