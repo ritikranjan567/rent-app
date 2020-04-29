@@ -191,7 +191,7 @@ $(document).on("turbolinks:load", function(){
     showWarn($(this), "assetPrice", AssetValidator.validateAssetPrice);
   });
 
-  $("#address").on("keyup", function(){
+  $("#asset_address").on("keyup", function(){
     showWarn($(this), "address", AssetValidator.validateAddress);
   });
 

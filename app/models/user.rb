@@ -12,4 +12,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable, :lockable,
          :recoverable, :rememberable, :validatable
+
+  def unviewed_notifications_count
+    Notification.for_user(self.id)
+  end
 end

@@ -1,5 +1,5 @@
 <div class="card asset-cards col-sm-3">
-  <%= image_tag asset.pictures.first, alt: "Card Image", class: "card-img-top" %>
+  <%= image_tag asset.pictures.first, alt: "Card Image", class: "card-img-top", style: "height: 13rem;" %>
   <div class="card-body">
     <h4 class="card-title"><%= asset.name %></h4>
     <div>
@@ -8,11 +8,13 @@
       <% end %>
     </div>
     <br>
-    <p class="card-text"> <%= asset.location.address %>  <%= asset.location.place %>, <%= asset.location.city %>, 
-    <%= asset.location.pincode %></p>
+    <div class="display-address-card">
+      <p class="card-text"> <%= asset.address %>  <%= asset.location.place %>, <%= asset.location.city %>, 
+      <%= asset.location.pincode %></p>
+    </div>
     <div class="card-footer" id="display_price">
       <%= asset.currency %> <%= asset.price %> <%= asset.payment_period %>
+      <%= link_to 'See it', asset_path(asset), class: "btn btn-success col-sm-12" %>
     </div>
-    <%= link_to 'See it', asset_path(asset), class: "btn btn-success col-sm-12" %>
   </div>
 </div>

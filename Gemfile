@@ -30,8 +30,9 @@ gem 'authy'
 gem 'geocoder'
 #for bootstrap
 gem 'bootstrap'
-
-#for smart search results
+#for background processing
+gem 'sinatra'
+gem 'sidekiq'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

@@ -113,3 +113,26 @@
   height: 7rem;
   border-radius: 50%;
 }
+
+.display-address-card{
+  height: 6rem;
+}
+
+#show_rating{
+  font-size: 1.6rem;
+  font-weight: bold;
+  width: fit-content;
+}
+
+#show_rating:hover{
+  color: blue;
+  cursor: pointer;
+}
+
+#show_rating_click_msg{
+  color: rgb(177, 176, 176);
+}
+
+#show_rating_click_msg:hover{
+  color: rgba(66, 66, 252, 0.658);
+}

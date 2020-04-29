@@ -7,6 +7,8 @@ module ApplicationHelper
       "info"
     elsif (key.to_s == "alert")
       "warning"
+    else
+      key.to_s
     end
   end
 

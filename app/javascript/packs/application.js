@@ -13,6 +13,7 @@ require('jquery')
 require('popper.js')
 require('packs/signup')
 require('packs/createAsset')
+require('packs/rating')
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
@@ -32,7 +33,20 @@ $(document).on("turbolinks:load", function(){
 
   $("#alert_info").fadeTo(3500, 500).slideUp(500, function(){ $(this).slideUp(500); });
 
+
+  var searchInput = document.getElementById("search");
+  searchInput.addEventListener("input", function(){
+    $.ajax({
+      url: "/searchoption",
+      type: "get",
+      data: {search: searchInput.value},
+      success: function(data) { 
+        $("#search_options").children().remove()
+        $("#search_options").append(data); 
+      },
+      error: function() { console.log("search ajax error") }
+    });
+  });
+
 });
 //-----------------------------------------------------
-
-

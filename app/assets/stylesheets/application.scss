@@ -19,6 +19,12 @@
    background-repeat: repeat;
    background-attachment: fixed;
  }
+
+ footer{
+   height: 10vh;
+   color: gray;
+   font-size: large;
+ }
  
  #application_nav{
    background-color: crimson;
@@ -30,7 +36,8 @@
  }
 
  #content{
-   margin-top: 3.3rem;
+   margin-top: 3.5rem;
+   margin-bottom: 3rem;
  }
 
  .custom-hover:hover{

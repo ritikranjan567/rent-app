@@ -64,7 +64,7 @@
       <div id="coordinates" style="display: none;"> <%= @asset.location.latitude %>, <%= @asset.location.longitude %> </div>
     </div>
     <div id="show_address" style="margin-top: 0.6rem;">
-      <strong>Address:</strong> <%= @asset.location.address %> <br>
+      <strong>Address:</strong> <%= @asset.address %> <br>
       <strong>Place:</strong> <%= @asset.location.place %>
       <strong>City:</strong> <%= @asset.location.city %>
       <strong>Pincode:</strong> <%= @asset.location.pincode %>
@@ -72,13 +72,31 @@
   </div>
   <hr>
   <div class="row">
-      <div class="col-sm-2" style="color: orange;">
+      <div class="col-sm-4" style="color: orange; font-size: 1.3rem;">
         <strong><%= "#{@asset.currency}#{@asset.price} #{@asset.payment_period}" %></strong>
       </div>
-      <div class="col-sm-10">
+      <div class="col-sm-8">
         <%= link_to "Request Booking", asset_new_booking_request_path(@asset), class: "btn btn-primary", style: "float: right;"%>
         <%= link_to "Back", assets_path, class: "btn btn-warning", style: "float: right; margin-right: 0.5rem;" %>
       </div>
+  </div>
+  <hr>
+  <div id="show_rating"> 
+    <% if display_avg_rating(@asset).class.superclass == Numeric %>
+      <%= link_to asset_ratings_path(@asset) do %>
+        <span class="fa fa-star checked"></span> <%= display_avg_rating(@asset) %>/5
+        <span id="show_rating_click_msg">(click here to view reviews)</span>
+      <% end %>
+      <% else %>
+      <%= display_avg_rating(@asset) %>
+    <% end %>
+  </div>
+  <hr>
+  <div class="dropdown-toggle" data-toggle="collapse" data-target="#rating_form_container" id="show_rating_form">
+    Rate Here:
+  </div>
+  <div class="collapse" id="rating_form_container">
+    <%= render 'ratings/rating_form' %>
   </div>
   <hr>
 </div>

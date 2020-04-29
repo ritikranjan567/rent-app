@@ -1,0 +1,15 @@
+<%= form_for [@asset, @asset.ratings.build] do |f| %>
+  <%= f.text_field :score, style: "display: none;", value: "2" %>
+  <div class="stars">
+    <span class="fa fa-star checked" id="1"></span>
+    <span class="fa fa-star checked" id="2"></span>
+    <span class="fa fa-star unchecked" id="3"></span>
+    <span class="fa fa-star unchecked" id="4"></span>
+    <span class="fa fa-star unchecked" id="5"></span>
+  </div>
+  <div class="form-group">
+    <%= f.label :feedback, "Give feedback:" %>
+    <%= f.text_area :feedback, class: "form-control", row: 2, required: true %>
+  </div>
+  <%= f.submit "Post feedback", class: "btn btn-primary" %>
+<% end %>

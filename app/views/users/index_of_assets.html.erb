@@ -1,0 +1,9 @@
+<h2>My Assets</h2>
+<hr>
+<% if @assets.any? %>
+  <div class="row">
+    <%= render partial: 'assets/asset', collection: @assets %>
+  </div>
+  <% else %>
+  <h4><strong>You have not posted any asset yet</strong></h4>
+<% end %>

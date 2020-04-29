@@ -23,9 +23,10 @@
           <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <%= form_tag('#', method: :get, class: "form-inline") do %>
+        <%= form_tag(assets_path, method: :get, class: "form-inline") do %>
           <div class="search-form">
-            <%= text_field_tag(:search, params[:search], class: "form-control", placeholder: "Location or Event") %>
+            <%= text_field_tag(:search, nil, class: "form-control", placeholder: "Location or Event", list: "search_options") %>
+             <datalist id="search_options"></datalist>
             <%= button_tag :submit, class: "btn btn-success" do %>
               <i class="fa fa-search"></i>
             <% end %>
@@ -46,8 +47,15 @@
               <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-item"> <%= current_user.first_name %> </div> <hr>
                 <%= link_to 'Edit Profile', edit_user_registration_path, class: "dropdown-item" %>
+                <%= link_to 'My assets', my_assets_path, class: "dropdown-item" %>
+                <%= link_to 'Wishlist', "#", class: "dropdown-item" %>
                 <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "dropdown-item" %>
               </div>
+            </li>
+            <li class="nav-item">
+              <%= link_to notifications_path do %>
+                <span class="fa fa-bell" style="font-size: 1.85rem; color: green;"></span>
+              <% end %>
             </li>
           <% end %>
         </ul>
@@ -65,5 +73,7 @@
     <div class="container-fluid" id="content">
       <%= yield %>
     </div>
+    <hr>
+    <footer class="footer text-center">&copy; Mindfire Solutions Developer: <em>Ritik Ranjan Baidyanath</em></footer>
   </body>
 </html>

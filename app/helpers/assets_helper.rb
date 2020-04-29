@@ -12,4 +12,8 @@ module AssetsHelper
     return user.profile_picture if user.profile_picture.attached?
     "profile_img.png"
   end
+
+  def display_avg_rating(asset)
+    asset.avg_rating
+  end
 end

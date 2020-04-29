@@ -1,4 +1,7 @@
 class BookingsController < ApplicationController
+  
+  before_action :not_owner_of_asset, only: [:new_request, :create_request]
+
   def new_request
     @request = Asset.find(params[:asset_id]).requests.build
   end
@@ -18,5 +21,12 @@ class BookingsController < ApplicationController
 
   def request_params
     params.require(:request).permit(:event_name, :event_description, :event_start_date, :event_end_date)
+  end
+
+  def not_owner_of_asset
+    if Asset.find(params[:asset_id]).user.id == current_user.id
+      flash[:danger] = "You are the owner of this asset."
+      redirect_to asset_path(params[:asset_id])
+    end
   end
 end

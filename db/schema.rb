@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_22_172257) do
+ActiveRecord::Schema.define(version: 2020_04_27_155004) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2020_04_22_172257) do
     t.integer "user_id"
     t.integer "location_id"
     t.string "currency"
+    t.text "address"
     t.index ["location_id"], name: "index_assets_on_location_id"
     t.index ["user_id"], name: "index_assets_on_user_id"
   end
@@ -63,7 +64,6 @@ ActiveRecord::Schema.define(version: 2020_04_22_172257) do
     t.float "longitude"
     t.float "latitude"
     t.string "place"
-    t.text "address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "city"
@@ -77,6 +77,17 @@ ActiveRecord::Schema.define(version: 2020_04_22_172257) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["request_id"], name: "index_notes_on_request_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "item_type"
+    t.integer "item_id"
+    t.boolean "viewed"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["item_type", "item_id"], name: "index_notifications_on_item_type_and_item_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -149,6 +160,7 @@ ActiveRecord::Schema.define(version: 2020_04_22_172257) do
   add_foreign_key "assets", "users"
   add_foreign_key "bookings", "users"
   add_foreign_key "notes", "requests"
+  add_foreign_key "notifications", "users"
   add_foreign_key "ratings", "assets"
   add_foreign_key "requests", "assets"
   add_foreign_key "wished_assets", "wishlists"
