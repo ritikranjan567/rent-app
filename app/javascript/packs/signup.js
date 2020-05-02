@@ -85,7 +85,7 @@ function signup_warn(element, validatorFunction, messageType) {
     .next().text(messages[messageType]).css({"display": "block", "color": "red"});
   }
   // this is just for password strength check...
-  else if (messages.password == "Medium" || messages.password == "Weak"){
+  else if (messages[messageType] == "Medium" || messages[messageType] == "Weak"){
     element.css("border", "0.165rem solid orange")
     .next().attr("class", "feedback-icon fa fa-exclamation")
     .css({"display": "inline", "color": "orange"})

@@ -8,8 +8,7 @@ class Asset < ApplicationRecord
 
   def avg_rating
     if self.ratings.any?
-      rating_score_array = self.ratings.pluck(:score)
-      rating_score_array.inject(0) { |sum, element| sum += element } / rating_score_array.length
+      self.ratings.average(:score).to_f
     else
       "No reviews yet"
     end

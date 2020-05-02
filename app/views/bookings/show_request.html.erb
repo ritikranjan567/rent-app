@@ -1,0 +1,43 @@
+<div class="container col-sm-7" id="show_request_container">
+  <div class="request-heading">
+    <h3>
+      For: <%= link_to asset_path(@request.asset) do %>
+      <strong> <%= @request.asset.name %> </strong> <% end %>
+    </h3>
+    <h5> By: <%= "#{get_user(@request.user_id).first_name} #{get_user(@request.user_id).last_name}" %> </h5>
+  </div>
+  <hr>
+  <div class="request-body">
+    For Event: <p style="display: inline; background-color: #e8f5bf; padding: 0.3rem;"> <%= @request.event_name %> </p>
+    <br> <br>
+    Dexcription: <br>
+    <p><%= @request.event_description %></p>
+    <br>
+
+    <div style="margin-top: 0.6rem; display: flex;">
+      <div class="col-sm-3">
+        Event Start Date:
+        <div datetime=<%= @request.event_start_date %> class="start-date"> 
+          <div class="day"></div>
+          <div class="month"></div>
+          <div class="date"></div>
+          <div class="year"></div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        Event End Date:
+        <div datetime=<%= @request.event_end_date %> class="end-date"> 
+          <div class="day"></div>
+          <div class="month"></div>
+          <div class="date"></div>
+          <div class="year"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6 ml-auto mt-1">
+    <%= link_to 'Reject', "#", class: "btn btn-danger" %>
+    <%= link_to 'Accept', "#", class: "btn btn-success" %>
+  </div>
+</div>

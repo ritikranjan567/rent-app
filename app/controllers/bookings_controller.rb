@@ -5,6 +5,7 @@ class BookingsController < ApplicationController
   def new_request
     @request = Asset.find(params[:asset_id]).requests.build
   end
+
   def create_request
     @request = Asset.find(params[:asset_id]).requests.build(request_params)
     @request.user_id = current_user.id
@@ -15,6 +16,14 @@ class BookingsController < ApplicationController
     else
       render 'new_request'
     end
+  end
+
+  def requests_index
+    @requests = current_user.requests
+  end
+
+  def show_request
+    @request = Request.find(params[:id])
   end
 
   protected

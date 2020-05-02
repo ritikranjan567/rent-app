@@ -20,3 +20,20 @@
 #show_rating_form{
   cursor: pointer;
 }
+
+.show-review-head{
+  font-style: oblique;
+  margin-bottom: 0.7rem;
+}
+
+.show-review-feedback{
+  font-size: 0.9rem;
+}
+
+.display-review:nth-child(odd){
+  background-color: rgba(223, 221, 221, 0.384);
+}
+
+.display-review{
+  padding: 0.5rem;
+}

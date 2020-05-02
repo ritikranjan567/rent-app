@@ -1,1 +1,17 @@
-<h4>Ratings</h4>
+<h4><strong> Reviews for
+  <%= link_to asset_path(@ratings_and_feedbacks.first.asset) do %>
+    <em><%= @ratings_and_feedbacks.first.asset.name %></em>
+  <% end %> 
+</strong></h4>
+<hr>
+<% @ratings_and_feedbacks.each do |rating_and_feedback| %>
+  <div class="display-review">
+    <div class="show-review-head">
+      <strong><%= display_user_name(rating_and_feedback.user_id) %></strong> &nbsp;
+      <span class="display-stars" data= <%= rating_and_feedback.score %> ></span>
+    </div>
+    <div class="show-review-feedback">
+      <%= rating_and_feedback.feedback %>
+    </div>
+  </div>
+<% end %>

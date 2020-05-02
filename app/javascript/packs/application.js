@@ -48,5 +48,26 @@ $(document).on("turbolinks:load", function(){
     });
   });
 
+  /* --------- Displaying date --------------------- */
+  if ($(".start-date")){
+    var calenderContianer = $(".start-date");
+    var dateData = new Date(calenderContianer.attr("datetime"));
+    var dateArray = dateData.toDateString().split(" ");
+    calenderContianer.find(".day").text(dateArray[0]);
+    calenderContianer.find(".month").text(dateArray[1]);
+    calenderContianer.find(".date").text(dateArray[2]);
+    calenderContianer.find(".year").text(dateArray[3]);
+  }
+  if ($(".end-date")){
+    var calenderContianer = $(".end-date");
+    var dateData = new Date(calenderContianer.attr("datetime"));
+    var dateArray = dateData.toDateString().split(" ");
+    calenderContianer.find(".day").text(dateArray[0]);
+    calenderContianer.find(".month").text(dateArray[1]);
+    calenderContianer.find(".date").text(dateArray[2]);
+    calenderContianer.find(".year").text(dateArray[3]);
+  }
+  /* -------------------------------------------------------- */
+
 });
 //-----------------------------------------------------

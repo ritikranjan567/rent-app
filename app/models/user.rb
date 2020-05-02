@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :assets, dependent: :destroy
   has_one :wishlist, dependent: :destroy
   has_many :bookings, dependent: :destroy
+  has_many :requests, through: :assets, dependent: :destroy
   has_one_attached :profile_picture, dependent: :destroy
   #validates :profile_picture, content_type: ['image/png', 'image/jpg', 'image/jpeg']
   # Include default devise modules. Others available are:

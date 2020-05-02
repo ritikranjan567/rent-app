@@ -76,7 +76,7 @@
         <strong><%= "#{@asset.currency}#{@asset.price} #{@asset.payment_period}" %></strong>
       </div>
       <div class="col-sm-8">
-        <%= link_to "Request Booking", asset_new_booking_request_path(@asset), class: "btn btn-primary", style: "float: right;"%>
+        <%= link_to "Request Booking", new_request_asset_bookings_path(@asset), class: "btn btn-primary", style: "float: right;"%>
         <%= link_to "Back", assets_path, class: "btn btn-warning", style: "float: right; margin-right: 0.5rem;" %>
       </div>
   </div>

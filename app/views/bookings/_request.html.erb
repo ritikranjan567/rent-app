@@ -1,0 +1,9 @@
+<div class="show-request row">
+  <div class="col-sm-9">
+    For: <strong> <%= request.asset.name %> </strong>, By: <em> <%= "#{get_user(request.user_id).first_name} #{get_user(request.user_id).last_name}" %> </em><br>
+    From: <%= request.event_start_date %>, To: <%= request.event_end_date %>
+  </div>
+  <div class="col-sm-3 text-center">
+    <%= link_to 'Show details', show_request_bookings_path(request), class: "btn btn-primary" %>
+  </div>
+</div>

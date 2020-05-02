@@ -48,6 +48,7 @@
                 <div class="dropdown-item"> <%= current_user.first_name %> </div> <hr>
                 <%= link_to 'Edit Profile', edit_user_registration_path, class: "dropdown-item" %>
                 <%= link_to 'My assets', my_assets_path, class: "dropdown-item" %>
+                <%= link_to 'Requests', requests_index_bookings_path, class: "dropdown-item" %>
                 <%= link_to 'Wishlist', "#", class: "dropdown-item" %>
                 <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: "dropdown-item" %>
               </div>

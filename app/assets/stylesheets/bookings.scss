@@ -1,3 +1,40 @@
 // Place all the styles related to the bookings controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.show-request{
+  padding: 0.6rem;
+}
+
+.show-request:nth-child(odd){
+  background-color: rgba(223, 221, 221, 0.384);
+}
+
+.start-date, .end-date{
+  width: 7rem;
+}
+
+.day{
+  background-color: rgb(233, 16, 59);
+  color: wheat;
+  text-align: center;
+  font-weight: bold;
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+}
+.month{
+  background-color: rgb(230, 230, 230);
+  text-align: center;
+}
+.date{
+  background-color: rgb(230, 230, 230);
+  font-size: 3rem;
+  text-align: center;
+}
+
+.year{
+  background-color: rgb(230, 230, 230);
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  text-align: center;
+}

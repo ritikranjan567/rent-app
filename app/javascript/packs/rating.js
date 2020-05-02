@@ -12,4 +12,26 @@ $(document).on("turbolinks:load", function(){
     $("#rating_score").val($(this).attr("id"));    
   });
 
+  var starDisplay = document.getElementsByClassName("display-stars");
+  
+  if(starDisplay.length > 0){
+    for (j = 0; j < starDisplay.length; j++){
+      starDisplay[j].innerHTML = setStars(starDisplay[j]);
+    }
+  }
+
 });
+
+function setStars(parantElement) {
+  
+  var score = Number(parantElement.getAttribute("data"));
+  var html = "";
+  for (i = 0; i < 5; i++){
+    if (i < score){
+      html = html + '<span class="fa fa-star checked"></span>';
+      continue;
+    }
+    html = html + '<span class="fa fa-star unchecked"></span>';
+  }
+  return html;
+}
