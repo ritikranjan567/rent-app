@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_27_155004) do
+ActiveRecord::Schema.define(version: 2020_05_02_185327) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2020_04_27_155004) do
   end
 
   create_table "notes", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "userid"
     t.text "content"
     t.integer "request_id"
     t.datetime "created_at", precision: 6, null: false
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 2020_04_27_155004) do
   end
 
   create_table "requests", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "userid"
     t.string "request_status", default: "pending"
     t.integer "asset_id"
     t.datetime "created_at", precision: 6, null: false

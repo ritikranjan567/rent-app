@@ -1,0 +1,13 @@
+<div class="container col-sm-7">
+  <h3><strong>Notes</strong></h3>
+  <hr>
+  <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#add_note_container">
+    Add note <span class="fa fa-plus-circle"></span>
+  </button>
+  <%= render 'notes/new_note' %>
+  <% if @notes.any? %>
+    <%= render @notes %>
+    <% else %>
+    <h4>No notes found yet.</h4>
+  <% end %>
+</div>

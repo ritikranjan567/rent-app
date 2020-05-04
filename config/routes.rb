@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :notes, path: 'bookings/:request_id', only: [:create, :index, :destroy]
+  resources :notes, path: 'notes/:request_id', only: [:create, :index, :destroy]
 
   get 'myassets', to: 'users#index_of_assets', as: 'my_assets'
   get 'searchoption', to: 'assets#get_option_for_search_input', as: 'search_option'

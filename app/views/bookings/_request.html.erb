@@ -1,6 +1,6 @@
 <div class="show-request row">
   <div class="col-sm-9">
-    For: <strong> <%= request.asset.name %> </strong>, By: <em> <%= "#{get_user(request.user_id).first_name} #{get_user(request.user_id).last_name}" %> </em><br>
+    For: <strong> <%= request.asset.name %> </strong>, By: <em> <%= "#{get_user(request.userid).first_name} #{get_user(request.userid).last_name}" %> </em><br>
     From: <%= request.event_start_date %>, To: <%= request.event_end_date %>
   </div>
   <div class="col-sm-3 text-center">

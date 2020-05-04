@@ -1,0 +1,9 @@
+<div class="collapse" id="add_note_container">
+  <%= form_for :note, url: notes_path(@request) do |f| %>
+    <div class="form-group">
+      <%= f.label :content, "Your message:" %>
+      <%= f.text_area :content, class: "form-control", row: 2 %>
+    </div>
+    <%= f.submit "Add message", class: "btn btn-primary" %>
+  <% end %>
+</div>
