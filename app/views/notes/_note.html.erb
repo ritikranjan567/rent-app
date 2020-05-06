@@ -1,4 +1,4 @@
 <div class="note-container">
-  <strong> <%= get_note_creater_name(note.userid) %> </strong>
+  <strong> <%= "#{note.user.first_name} #{note.user.last_name}" %> </strong>
   <p> <%= note.content %> </p>
 </div>

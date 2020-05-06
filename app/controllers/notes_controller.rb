@@ -3,7 +3,7 @@ class NotesController < ApplicationController
   def create
     @request = Request.find(params[:request_id])
     @note = @request.notes.build(note_params)
-    @note.userid = current_user.id
+    @note.user = current_user
     if @note.save
       flash[:success] = "Note successfully added"
       redirect_to notes_path

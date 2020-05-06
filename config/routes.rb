@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   delete 'deleteprofilepic', to: 'users#delete_profile_pic', as: 'delete_profile_pic'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :assets do
-    resources :bookings do
+    resources :bookings, only: [:create_request, :new_request] do
       collection do
         post :create_request
         get :new_request
@@ -18,10 +18,13 @@ Rails.application.routes.draw do
   end
   #get 'bookings/requests_index', to: 'bookings#requests_index', as: 'requests_index'
   #get 'bookings/show_request/:id', to: 'bookings#show_request', as: 'show_request'
-  resources :bookings do
+  resources :bookings, only: [:index] do
     collection do
       get :requests_index
       get 'show_request/:id', to: 'bookings#show_request', as: 'show_request'
+      get :my_requests_index
+      get 'show_request/:request_id/reject_request', to: 'bookings#reject_request', as: 'reject_request'
+      get 'show_request/:request_id/accept_request', to: 'bookings#accept_request', as: 'accept_request'
     end
   end
 

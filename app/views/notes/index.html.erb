@@ -7,7 +7,9 @@
   <%= render 'notes/new_note' %>
   <% if @notes.any? %>
     <%= render @notes %>
+    <%= link_to 'Back', show_request_bookings_path(@notes.first.request) %>
     <% else %>
     <h4>No notes found yet.</h4>
+    <%= link_to 'Back', :back %>
   <% end %>
 </div>

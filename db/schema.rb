@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_02_185327) do
+ActiveRecord::Schema.define(version: 2020_05_05_173352) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -53,10 +53,13 @@ ActiveRecord::Schema.define(version: 2020_05_02_185327) do
 
   create_table "bookings", force: :cascade do |t|
     t.text "cancelation_msg"
-    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "booked_asset_id"
+    t.integer "user_id"
+    t.integer "asset_id"
+    t.integer "request_id"
+    t.index ["asset_id"], name: "index_bookings_on_asset_id"
+    t.index ["request_id"], name: "index_bookings_on_request_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
@@ -71,12 +74,13 @@ ActiveRecord::Schema.define(version: 2020_05_02_185327) do
   end
 
   create_table "notes", force: :cascade do |t|
-    t.integer "userid"
     t.text "content"
     t.integer "request_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
     t.index ["request_id"], name: "index_notes_on_request_id"
+    t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -102,7 +106,6 @@ ActiveRecord::Schema.define(version: 2020_05_02_185327) do
   end
 
   create_table "requests", force: :cascade do |t|
-    t.integer "userid"
     t.string "request_status", default: "pending"
     t.integer "asset_id"
     t.datetime "created_at", precision: 6, null: false
@@ -111,7 +114,9 @@ ActiveRecord::Schema.define(version: 2020_05_02_185327) do
     t.text "event_description"
     t.date "event_start_date"
     t.date "event_end_date"
+    t.integer "requestor_id"
     t.index ["asset_id"], name: "index_requests_on_asset_id"
+    t.index ["requestor_id"], name: "index_requests_on_requestor_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -158,11 +163,11 @@ ActiveRecord::Schema.define(version: 2020_05_02_185327) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "assets", "locations"
   add_foreign_key "assets", "users"
-  add_foreign_key "bookings", "users"
   add_foreign_key "notes", "requests"
   add_foreign_key "notifications", "users"
   add_foreign_key "ratings", "assets"
   add_foreign_key "requests", "assets"
+  add_foreign_key "requests", "users", column: "requestor_id"
   add_foreign_key "wished_assets", "wishlists"
   add_foreign_key "wishlists", "users"
 end

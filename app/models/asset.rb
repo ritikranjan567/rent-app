@@ -5,6 +5,7 @@ class Asset < ApplicationRecord
   belongs_to :location
   has_many :requests, dependent: :destroy
   has_many_attached :pictures, dependent: :destroy
+  has_one :booking, dependent: :destroy
 
   def avg_rating
     if self.ratings.any?

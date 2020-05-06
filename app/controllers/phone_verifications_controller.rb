@@ -1,6 +1,6 @@
 class PhoneVerificationsController < ApplicationController
   
-  #skip_before_action :phone_number_verification
+  before_action :check_unique_cellId, only: [:create]
 
   def new
   end
@@ -40,6 +40,15 @@ class PhoneVerificationsController < ApplicationController
       redirect_to root_path
     else
       render challenge
+    end
+  end
+
+  private
+
+  def check_unique_cellId
+    if User.where(phone_number: params[:phone_number]).any?
+      flash[:warning] = "Phone number already taken"
+      redirect_to new_phone_verification_path
     end
   end
   

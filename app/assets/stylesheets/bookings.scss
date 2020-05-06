@@ -38,3 +38,15 @@
   border-bottom-right-radius: 0.5rem;
   text-align: center;
 }
+
+.request-pending{
+  color: orange;
+}
+
+.request-accepted{
+  color: green;
+}
+
+.request-rejected{
+  color: red;
+}

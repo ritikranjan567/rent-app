@@ -1,0 +1,9 @@
+<div class="container col-sm-9" id="show_requests_container">
+  <h3> My Requests and status</h3> <hr>
+  <% if @requests.any? %>
+    <%= render partial: 'bookings/request', collection: @requests %>
+    <% else %>
+    <h4>You have not requested for anything yet.</h4>  
+  <% end %>
+  
+</div>

@@ -4,7 +4,7 @@
       For: <%= link_to asset_path(@request.asset) do %>
       <strong> <%= @request.asset.name %> </strong> <% end %>
     </h3>
-    <h5> By: <%= "#{get_user(@request.userid).first_name} #{get_user(@request.userid).last_name}" %> </h5>
+    <h5> By: <%= "#{@request.requestor.first_name} #{@request.requestor.last_name}" %> </h5>
   </div>
   <hr>
   <div class="request-body">
@@ -36,10 +36,12 @@
     </div>
   </div>
 
-  <div class="col-sm-6 ml-auto mt-1">
-    <%= link_to 'Reject', "#", class: "btn btn-danger" %>
-    <%= link_to 'Accept', "#", class: "btn btn-success" %>
-  </div>
+  <% if @request.asset.user.id == current_user.id %>
+    <div class="col-sm-6 ml-auto mt-1">
+      <%= link_to 'Reject', reject_request_bookings_path(@request), class: "btn btn-danger" %>
+      <%= link_to 'Accept', accept_request_bookings_path(@request), class: "btn btn-success" %>
+    </div>
+  <% end %>
 
   <%= link_to 'View notes', notes_path(@request.id), class: "btn btn-link" %>
   
