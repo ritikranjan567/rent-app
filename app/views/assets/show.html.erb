@@ -1,5 +1,14 @@
 <div class="show-asset-container container col-sm-10">
   <div id="asset_images" class="carousel slide text-center" data-ride="carousel">
+    <% if !already_in_wishlist? @asset.id %>
+      <%= link_to asset_add_to_wishlist_path(@asset), class: "btn btn-link wishlist-button" do %>
+        <span class="fa fa-plus-square" style="color: #b6f769; font-size: xx-large;" title="Add to your wishlist"></span>
+      <% end %>
+      <% else %>
+      <%= link_to asset_remove_from_wishlist_path(@asset), method: :delete, class: "btn btn-link wishlist-button" do %>
+        <span class="fa fa-window-close" style="color: red; font-size: xx-large;" title="Remove from your wishlist"></span>
+      <% end %> 
+    <% end %>
     <!-- Indicators -->
     <ul class="carousel-indicators">
       <% @asset.pictures.count.times do |i| %>

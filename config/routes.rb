@@ -12,12 +12,11 @@ Rails.application.routes.draw do
         get :new_request
       end
     end
-    #get 'bookings/newrequest', to: 'bookings#new_request', as: 'new_booking_request'
-    #post 'bookings/requests', to: 'bookings#create_request', as: 'requests'
     resources :ratings, only: [:index, :create, :edit, :destroy]
+    get :add_to_wishlist
+    delete :remove_from_wishlist
   end
-  #get 'bookings/requests_index', to: 'bookings#requests_index', as: 'requests_index'
-  #get 'bookings/show_request/:id', to: 'bookings#show_request', as: 'show_request'
+  get 'wished_assets', to: 'assets#wished_assets', as: 'wished_assets'
   resources :bookings, only: [:index, :destroy] do
     collection do
       get :requests_index

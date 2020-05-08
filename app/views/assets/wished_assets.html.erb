@@ -1,0 +1,9 @@
+<h3>My wishlist</h3>
+<hr>
+<div class="row">
+  <% if @assets.any? %>
+    <%= render partial: 'assets/asset', collection: @assets %>
+    <% else %>
+    <h4>Your wishlist is empty.</h4>
+  <% end %>
+</div>

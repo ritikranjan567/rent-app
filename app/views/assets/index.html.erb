@@ -1,4 +1,8 @@
 <div class="row">
-  <%= render @assets %>
+  <% if @assets.any? %>
+    <%= render @assets %>
+    <% else %>
+    <h4>Oops.. Nothing yet..</h4>
+  <% end %>
 </div>
 

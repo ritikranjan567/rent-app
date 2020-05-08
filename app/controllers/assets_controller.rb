@@ -1,7 +1,8 @@
 class AssetsController < ApplicationController
 
-  before_action :ensure_authorized_user, only: [:new, :create, :destroy]
+  before_action :ensure_authorized_user, only: [:new, :create, :destroy, :add_to_wishlist]
   before_action :phone_number_verification, only: [:new, :create, :destroy], if: :user_signed_in?
+  before_action :restrict_add_to_wishlist, only: [:add_to_wishlist]
 
   def index
     @assets = Asset.first(10)
@@ -38,6 +39,30 @@ class AssetsController < ApplicationController
     render inline: "<%= options_for_select(" + generate_option_array(params[:search]).to_s + ") %>"
   end
 
+  def add_to_wishlist
+    @wishlist = create_or_assign_wishlist
+    @wished_asset = @wishlist.wished_assets.create!(asset_id: params[:asset_id])
+    flash[:success] = "Added to your wishlist"
+    redirect_to asset_path(params[:asset_id])
+  end
+  
+  def wished_assets
+    if current_user.wishlist
+      @assets = Asset.where("id in (?)", current_user.wishlist.wished_assets.pluck(:asset_id))
+    else
+      @assets = Asset.none
+    end
+  end
+
+  def remove_from_wishlist
+    current_user.wishlist.wished_assets.find_by(asset_id: params[:asset_id]).delete
+    if !current_user.wishlist.wished_assets.any?  #now use of wishlist if there is no wished_assets
+      current_user.wishlist.delete
+    end
+    flash[:success] = "Removed from your wishlist"
+    redirect_to asset_path(params[:asset_id])
+  end
+
   private
 
   def ensure_authorized_user
@@ -72,6 +97,24 @@ class AssetsController < ApplicationController
       Location.find_by(city: city, place: place, pincode: pincode)
     else
       Location.create!(city: city, place: place, pincode: pincode)
+    end
+  end
+
+  def create_or_assign_wishlist
+    return current_user.wishlist if current_user.wishlist
+    current_user.create_wishlist!
+  end
+
+  def restrict_add_to_wishlist
+    if current_user.id == Asset.find(params[:asset_id]).user.id
+      flash[:warning] = "It's your asset"
+      redirect_to asset_path(params[:asset_id])
+    end
+    if current_user.wishlist
+      if current_user.wishlist.wished_assets.where(asset_id: params[:asset_id]).any?
+        flash[:warning] = "Already in your wishlist"
+        redirect_to asset_path(params[:asset_id])
+      end  
     end
   end
 end
