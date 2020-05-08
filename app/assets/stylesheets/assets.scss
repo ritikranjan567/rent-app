@@ -136,3 +136,24 @@
 #show_rating_click_msg:hover{
   color: rgba(66, 66, 252, 0.658);
 }
+
+.booked-stamp{
+  position: relative;
+  bottom: 20vh;
+  left: 20vw;
+}
+
+.booked-stamp img{
+  width: 60vw;
+  height: 20vh;
+}
+
+.booked-stamp-for-cards{
+  position: absolute;
+  width: inherit;
+}
+
+.booked-stamp-for-cards img{
+  height: 13rem;
+  width: inherit;
+}

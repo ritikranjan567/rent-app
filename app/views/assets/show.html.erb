@@ -55,6 +55,11 @@
       <p style="color: blue; margin-bottom: 0;"><%= @asset.user.email %> </p>
       <p> <%= "#{@asset.user.country_code} #{@asset.user.phone_number}" %> </p>
     </div>
+    <% if !@asset.available && (@asset.user.id == current_user.id || @asset.booking.user.id == current_user.id) %>
+      <div class="col-sm-3 text-center">
+        <%= link_to 'Cancel Booking', booking_path(@asset.booking), data: { confirm: "Are you sure you want to cancel booking?" }, method: :delete, class: "btn btn-danger btn-lg" %>
+      </div>
+    <% end %>  
   </div>
   <hr>
 
@@ -81,6 +86,11 @@
       </div>
   </div>
   <hr>
+  <% if !@asset.available %>
+    <div class="booked-stamp">
+      <%= image_tag 'booked-stamp.png' %>
+    </div>
+  <% end %>
   <div id="show_rating"> 
     <% if display_avg_rating(@asset).class.superclass == Numeric %>
       <%= link_to asset_ratings_path(@asset) do %>

@@ -1,4 +1,9 @@
 <div class="card asset-cards col-sm-3">
+  <% if !asset.available %>
+    <div class="booked-stamp-for-cards">
+      <%= image_tag "booked-stamp.png", alt: "Booked stamp" %>
+    </div>
+  <% end %>
   <%= image_tag asset.pictures.first, alt: "Card Image", class: "card-img-top", style: "height: 13rem;" %>
   <div class="card-body">
     <h4 class="card-title"><%= asset.name %></h4>

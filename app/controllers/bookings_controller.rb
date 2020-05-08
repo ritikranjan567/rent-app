@@ -3,6 +3,7 @@ class BookingsController < ApplicationController
   before_action :check_user, only: [:new_request, :create_request]
   before_action :check_asset_owner, only: [:accept_request, :reject_request]
   before_action :restrict_acceptance, only: [:accept_request]
+  before_action :restrict_cancel_booking, only: [:destroy]
 
   def new_request
     @request = Asset.find(params[:asset_id]).requests.build
@@ -64,7 +65,16 @@ class BookingsController < ApplicationController
   end
 
   def index
-    
+    @bookings = current_user.bookings
+  end
+
+  def destroy
+    @booking = Booking.find(params[:id])
+    @asset = @booking.asset
+    @asset.update(available: true)
+    @booking.delete
+    flash[:success] = "Booking successfully cancelled"
+    redirect_to asset_path(@asset)
   end
 
   protected
@@ -105,9 +115,13 @@ class BookingsController < ApplicationController
     if request.request_status == "accepted"
       flash[:warning] = "Request already accepted"
       redirect_to show_request_bookings_path(params[:request_id])
-    elsif request.asset.booking
+    elsif !request.asset.available
       flash[:warning] = "This asset already booked"
       redirect_to show_request_bookings_path(params[:request_id])
     end
+  end
+
+  def restrict_cancel_booking
+    
   end
 end

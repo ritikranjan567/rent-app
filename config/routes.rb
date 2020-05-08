@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   end
   #get 'bookings/requests_index', to: 'bookings#requests_index', as: 'requests_index'
   #get 'bookings/show_request/:id', to: 'bookings#show_request', as: 'show_request'
-  resources :bookings, only: [:index] do
+  resources :bookings, only: [:index, :destroy] do
     collection do
       get :requests_index
       get 'show_request/:id', to: 'bookings#show_request', as: 'show_request'

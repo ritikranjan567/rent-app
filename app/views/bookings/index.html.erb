@@ -1,0 +1,9 @@
+<h3>My Booked Assets</h3>
+<hr>
+<% if @bookings.any? %>
+  <% @bookings.each do |booking| %>
+    <%= render partial: 'assets/asset', locals: {asset: booking.asset} %>
+  <% end %>
+<% else %>
+  <h4>You haven't booked for anything yet</h4>  
+<% end %>
