@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_08_081121) do
+ActiveRecord::Schema.define(version: 2020_05_08_175541) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2020_05_08_081121) do
     t.integer "location_id"
     t.string "currency"
     t.text "address"
+    t.integer "payment_period_days"
     t.index ["location_id"], name: "index_assets_on_location_id"
     t.index ["user_id"], name: "index_assets_on_user_id"
   end

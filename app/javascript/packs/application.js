@@ -22,8 +22,9 @@ require('packs/rating')
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-//only for alert messages-------------------------------
 $(document).on("turbolinks:load", function(){
+
+  /* ------ Animate feeback alert ------------------- */
   if ($("#alert_info").css("display") != "none"){
     $("#content").css("margin-top", "0.5rem;");
   }
@@ -32,8 +33,8 @@ $(document).on("turbolinks:load", function(){
   }
 
   $("#alert_info").fadeTo(3500, 500).slideUp(500, function(){ $(this).slideUp(500); });
-
-
+  /* --------------------------------------------------------------------------------- */
+  /* ------- Search auto complete Auto complete ---------------- */
   var searchInput = document.getElementById("search");
   searchInput.addEventListener("input", function(){
     $.ajax({
@@ -47,7 +48,7 @@ $(document).on("turbolinks:load", function(){
       error: function() { console.log("search ajax error") }
     });
   });
-
+  /* -------------------------------------------------------------- */
   /* --------- Displaying date --------------------- */
   if ($(".start-date")){
     var calenderContianer = $(".start-date");
@@ -68,6 +69,22 @@ $(document).on("turbolinks:load", function(){
     calenderContianer.find(".year").text(dateArray[3]);
   }
   /* -------------------------------------------------------- */
+  /* ------------- Filters Radio button ----------------------------- */
+  $("input[name='sort_by']").on("click", function(){
+    var radio_element = $(this);
+    
+    $.ajax({
+      url: "/assets/sort_assets_filter",
+      type: "get",
+      data: { sort_by: radio_element.val() },
+      success: function(data) { 
+        var assets_container = $("#show_assets_cards");
+        assets_container.children().remove();
+        assets_container.append(data);         
+      },
+      error: function() {  console.log("some error occured"); } 
+    });
+  });
+  /* --------------------------------------------------------------------- */
 
 });
-//-----------------------------------------------------

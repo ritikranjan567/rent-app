@@ -18,6 +18,7 @@ class AssetsController < ApplicationController
   def create
     @asset = Asset.new(asset_params)
     @asset.user = current_user
+    @asset.payment_period_days = number_of_days(@asset.payment_period)
     @location = create_location_for_asset(params[:city], params[:place], params[:pincode])
     @asset.location = @location
     @asset.event_tags = params[:event_tags].split(" ")
@@ -61,6 +62,13 @@ class AssetsController < ApplicationController
     end
     flash[:success] = "Removed from your wishlist"
     redirect_to asset_path(params[:asset_id])
+  end
+
+  def sort_assets_filter
+    if params[:sort_by] == "price"
+      @assets = Asset.sort_by_price
+      render partial: "assets/asset", collection: @assets
+    end
   end
 
   private
@@ -117,4 +125,12 @@ class AssetsController < ApplicationController
       end  
     end
   end
+
+  def number_of_days(in_words)
+    return 1 if in_words == "Per Day"
+    return 7 if in_words == "Per Week"
+    return 30 if in_words == "Per Month"
+    return 365 if in_words == "Per Annum"
+  end
+
 end

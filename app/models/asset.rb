@@ -7,6 +7,8 @@ class Asset < ApplicationRecord
   has_many_attached :pictures, dependent: :destroy
   has_one :booking, dependent: :destroy
 
+  scope :sort_by_price, -> { order("price / payment_period_days") }
+
   def avg_rating
     if self.ratings.any?
       self.ratings.average(:score).to_f
@@ -14,4 +16,5 @@ class Asset < ApplicationRecord
       "No reviews yet"
     end
   end
+
 end

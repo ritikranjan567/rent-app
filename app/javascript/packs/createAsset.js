@@ -1,9 +1,8 @@
 var message = {};  //for error messages
 var AssetValidator = (function(){
   var _validateAssetName = function(name){
-    console.log("called");
     
-    var regex =  /^[a-zA-Z ]{3,30}$/;
+    var regex =  /^[a-zA-Z' ]{3,30}$/;
     if (name.length == 0){
       message.assetName = "Please Name your place..";
       return false;

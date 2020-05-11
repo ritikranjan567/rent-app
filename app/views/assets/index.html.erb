@@ -1,4 +1,10 @@
-<div class="row">
+<div class="filter-container row">
+  <div class="ml-1 col-sm-2">
+    <%= label_tag :sort_by_price, "Sort by price" %>
+    <%= radio_button_tag :sort_by, 'price' %>
+  </div>
+</div> <hr>
+<div class="row" id="show_assets_cards">
   <% if @assets.any? %>
     <%= render @assets %>
     <% else %>
