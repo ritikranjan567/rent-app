@@ -7,7 +7,7 @@ module Notificable
   end
 
   def send_notifications_to_users
-    if self.respond_to? :user_id
+    if self.respond_to? :to_user_id
       NotificationSenderJob.perform_later(self)
     end
   end

@@ -1,8 +1,7 @@
 class User < ApplicationRecord
-  validates :email, uniqueness: true, presence: true
+  validates :email, uniqueness: true, presence: true, format: { with: Devise::email_regexp, message: "Invalid Email format" }
   validates :phone_number, uniqueness: true
-  validates :phone_number, presence: true, uniqueness: true
-  validates :first_name, :last_name, presence: true, length: {minimum:3}
+  validates :first_name, :last_name, presence: true, length: {minimum:3, maximum: 30}, format: { with: /([\w\-\']{2,})([\s]+)([\w\-\']{2,})/, message: "Invalid name format" }
   has_many :assets, dependent: :destroy
   has_one :wishlist, dependent: :destroy
   has_many :bookings, dependent: :destroy
@@ -14,7 +13,5 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable, :lockable,
          :recoverable, :rememberable, :validatable
 
-  def unviewed_notifications_count
-    Notification.for_user(self.id)
-  end
+  has_many :notifications, dependent: :destroy
 end

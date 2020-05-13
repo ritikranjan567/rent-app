@@ -87,7 +87,8 @@ ActiveRecord::Schema.define(version: 2020_05_08_175541) do
     t.integer "user_id"
     t.string "item_type"
     t.integer "item_id"
-    t.boolean "viewed"
+    t.boolean "viewed", default: false
+    t.string "message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["item_type", "item_id"], name: "index_notifications_on_item_type_and_item_id"

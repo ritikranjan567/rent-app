@@ -11,9 +11,11 @@ consumer.subscriptions.create("NotificationChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
-    console.log("Here");
     if(data.action == "new_notification"){
-      console.log(`New notificaton! Now you have ${data.message} unread notifications`);
+      console.log(data);
+      var notification_bell = $("#unviewed_notifications");
+      notification_bell.css("display", "block");
+      notification_bell.text(data.unseen_number);
     }
   }
 });

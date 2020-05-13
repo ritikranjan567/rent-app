@@ -1,4 +1,4 @@
-messages = {};
+var messages = {};
 var Validator = (function(){
   var _validateName = function(name){
     var regex = /^[a-zA-Z ]{2,30}$/;
@@ -12,6 +12,7 @@ var Validator = (function(){
       return false;
     }
     else{
+      messages.name = "ok"
       return true;
     }
   };
@@ -27,6 +28,7 @@ var Validator = (function(){
       return false;
     }
     else{
+      messages.email = "ok";
       return true;
     }
   };
@@ -54,6 +56,8 @@ var Validator = (function(){
         status++;
       }
       messages.password = msgs[status];
+      if (status >= 3)
+        messages.password = "Strong";
       return true;
     }
   };
@@ -64,6 +68,7 @@ var Validator = (function(){
       return false;
     }
     else{
+      messages.confirmPassword = "ok";
       return true;
     }
   };
@@ -78,6 +83,7 @@ var Validator = (function(){
 
 function signup_warn(element, validatorFunction, messageType) {
   var validationResult = validatorFunction(element.val());
+  signup_button_manager();
   if (!validationResult){
     element.css("border", "0.165rem solid red")
     .next().attr("class", "feedback-icon fa fa-times")
@@ -141,3 +147,15 @@ $(document).on("turbolinks:load", function(){
   });
   /* --------------------------------------------------- */
 });
+
+function signup_button_manager(){
+  var signup_btn = $("#sign_up");
+  var pass_messages = ["Medium", "Strong", "ok"];
+  for (const prop in messages){
+    if (!pass_messages.includes(messages[prop])){
+      signup_btn.attr("disabled", true);
+      return;
+    }
+  }
+  signup_btn.removeAttr("disabled");
+}

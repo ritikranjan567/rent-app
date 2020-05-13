@@ -90,10 +90,10 @@ class AssetsController < ApplicationController
   end
 
   def generate_option_array(input_text)
-    Array.new + Asset.where("name like ?", "%#{input_text}%").pluck(:name) + 
+    Array.new + Asset.where("name like ?", "%#{input_text}%").pluck(:name).uniq + 
     Asset.where("event_tags like ?", "%#{input_text}%").pluck(:event_tags).flatten + 
-    Location.where("place like ?", "%#{input_text}%").pluck(:place) + 
-    Location.where("city like ?", "%#{input_text}%").pluck(:city) 
+    Location.where("place like ?", "%#{input_text}%").pluck(:place).uniq + 
+    Location.where("city like ?", "%#{input_text}%").pluck(:city).uniq 
   end
 
   def search_result(search_text)

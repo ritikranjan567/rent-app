@@ -48,6 +48,21 @@
    padding-top: 0.6rem;
    background-color: rgba(212, 177, 112, 0.363);
  }
+
+ #unviewed_notifications{
+   background-color: darkorange;
+   padding: 0.4rem;
+   border-radius: 50%;
+   width: fit-content;
+   height: fit-content;
+   font-size: 0.8rem;
+   color: white;
+   position: absolute;
+   margin-right: 0.4rem;
+   display: none;
+   margin-top: -2.3rem;
+   margin-left: 0.81rem;
+ }
  
 
  

@@ -4,8 +4,8 @@ class Notification < ApplicationRecord
 
   after_create { NotificationBroadcastJob.perform_later(self) }
 
-  scope :news, ->{order("created_at DESC")}
-  scope :unviewed, ->{where(viewed: false)}
+  scope :news, ->{ order("created_at DESC") }
+  scope :unviewed, ->{ where(viewed: false) }
 
   def self.for_user(user_id)
     Notification.where(user_id: user_id).unviewed.count
