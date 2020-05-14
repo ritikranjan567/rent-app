@@ -1,0 +1,14 @@
+<div class="container col-sm-5 show-user">
+  <div class="text-center">
+    <%= image_tag place_user_profile_picture(@user), alt: "User profile picture" %>
+  </div>
+  <hr>
+  <div class="show-user-info text-center">
+    <strong>Name:</strong> <%= "#{@user.first_name} #{@user.last_name}" %>
+    <p style="color: blue"> <%= @user.email %> </p>
+    <strong>Phone Number:</strong> <%= "#{@user.country_code}-#{@user.phone_number}" %>
+  </div>
+  <hr>
+
+  <%= link_to 'Back', :back %>
+</div>

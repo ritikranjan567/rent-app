@@ -14,6 +14,7 @@ require('popper.js')
 require('packs/signup')
 require('packs/createAsset')
 require('packs/rating')
+require('packs/bookingRequest')
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
@@ -86,5 +87,14 @@ $(document).on("turbolinks:load", function(){
     });
   });
   /* --------------------------------------------------------------------- */
-
+  /* --------------  display number of unviewed notifications ------------------------------- */
+  var number_container = $("#unviewed_notifications");
+  if (number_container.attr("unviewed_count") > 0){
+    number_container.css("display", "block");
+    number_container.text(number_container.attr("unviewed_count"));
+  }
+  else{
+    number_container.css("display", "none");
+  }
+  /* ------------------------------------------------------------------------------ */
 });

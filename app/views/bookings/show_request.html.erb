@@ -4,7 +4,7 @@
       For: <%= link_to asset_path(@request.asset) do %>
       <strong> <%= @request.asset.name %> </strong> <% end %>
     </h3>
-    <h5> By: <%= "#{@request.requestor.first_name} #{@request.requestor.last_name}" %> </h5>
+    <h5> By: <%= link_to "#{@request.requestor.first_name} #{@request.requestor.last_name}", show_user_path(@request.requestor) %> </h5>
   </div>
   <hr>
   <div class="request-body">

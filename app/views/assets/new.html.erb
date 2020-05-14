@@ -22,9 +22,11 @@
           <option value="Sport"></option>
           <option value="Get Together"></option>
           <option value="Function"></option>
-          <option value="Meetings"></option>
+          <option value="Meeting"></option>
+          <option value="Feast"></option>
+          <option value="Staying"></option>
         </datalist>
-        <button type="button" class="btn btn-primary col-sm-3" id= "add_tags">Add Tag</button>
+        <button type="button" class="btn btn-primary col-sm-3" id="add_tags" disabled=true>Add Tag</button>
       </div>
       <h3>Enter few features and details: </h3>
       <div class="form-group">
@@ -66,7 +68,7 @@
           <label for="asset_pictures" class= "fa fa-plus btn btn-primary">
             Add Photos
           </label>
-          <%= f.file_field :pictures, multiple: true %>
+          <%= f.file_field :pictures, multiple: true, accept: "image/jpg, image/jpeg, image/png" %>
           <div class="preview-images">
           </div>
         </div>

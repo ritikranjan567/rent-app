@@ -59,7 +59,7 @@
             </li>
             <li class="nav-item">
               <%= link_to notifications_path do %>
-                <span class="fa fa-bell" style="font-size: 1.85rem; color: green;" id="notification_sign"> <span id="unviewed_notifications"></span> </span>
+                <span class="fa fa-bell" style="font-size: 1.85rem; color: green;" id="notification_sign"> <span id="unviewed_notifications" unviewed_count=<%= get_unviewed_count %> ></span> </span>
               <% end %>
             </li>
           <% end %>

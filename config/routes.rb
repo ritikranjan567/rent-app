@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'notifications/index'
   get 'assets/index'
   devise_for :users
+  get 'users/:id', to: 'users#show', as: 'show_user'
   delete 'deleteprofilepic', to: 'users#delete_profile_pic', as: 'delete_profile_pic'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   resources :assets do

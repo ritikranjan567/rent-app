@@ -21,7 +21,7 @@ class AssetsController < ApplicationController
     @asset.payment_period_days = number_of_days(@asset.payment_period)
     @location = create_location_for_asset(params[:city], params[:place], params[:pincode])
     @asset.location = @location
-    @asset.event_tags = params[:event_tags].split(" ")
+    @asset.event_tags = params[:event_tags].split(",")
     if @asset.save
       flash[:notice] = "Asset posted successfully."
       redirect_to asset_path(@asset)

@@ -15,7 +15,8 @@ consumer.subscriptions.create("NotificationChannel", {
       console.log(data);
       var notification_bell = $("#unviewed_notifications");
       notification_bell.css("display", "block");
-      notification_bell.text(data.unseen_number);
+      notification_bell.attr("unviewed_count", data.unseen_count);
+      notification_bell.text(data.unseen_count);
     }
   }
 });

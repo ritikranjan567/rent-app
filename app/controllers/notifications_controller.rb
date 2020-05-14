@@ -1,11 +1,6 @@
 class NotificationsController < ApplicationController
   def index
-    @notifications = Notification.where(user: current_user).unviewed.news
-
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    @notifications = Notification.where(user_id: current_user.id).news
   end
 
   private

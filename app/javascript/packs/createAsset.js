@@ -86,6 +86,11 @@ var AssetValidator = (function(){
     else
       return true;
   };
+
+  var _tagsValidator = function(tagName){
+    var regex = /^[A-Z][a-z]{2,20}$/;
+    return regex.test(tagName);
+  };
   return {
     validateAssetName: _validateAssetName,
     validateAssetDimension: _validateDimension,
@@ -93,7 +98,8 @@ var AssetValidator = (function(){
     validateAssetPrice: _validateAssetPrice,
     validateLocationText: _validateLocationText,
     validatePincode: _validatePincode,
-    validateAddress: _validateAddress
+    validateAddress: _validateAddress,
+    tagsValidator: _tagsValidator
   };
 })();
 
@@ -156,8 +162,8 @@ $(document).on("turbolinks:load", function(){
                   '<span class="remove-event-tag fa fa-times"></span>' +
                 '</div>';
     viewTags.append(html);
-    event_tags.val(event_tags.val() + " " + input.val());
-    console.log(event_tags.val());
+    event_tags.val(event_tags.val() + input.val() + ",");
+    //console.log(event_tags.val());
     
     input.val("");
   });
@@ -165,12 +171,22 @@ $(document).on("turbolinks:load", function(){
   //-----Removing tags-------------------------------------------------------
   $(document).on("click",".remove-event-tag", function(){
     var event_tags = $("#event_tags");
-    event_tags.val(event_tags.val().replace($(this).parent().text(), ""));
-    console.log(event_tags.val());
+    event_tags.val(event_tags.val().replace(($(this).parent().text() + ","), ""));
+    //console.log(event_tags.val());
 
     $(this).parent().remove();
   });
   //------------------------------------------------------------------------------
+  //------------ validate tag input ---------------------------------------------------
+  $("#add_asset_tags").on("keyup", function(){
+    var addBtn = $("#add_tags");
+    
+    if(AssetValidator.tagsValidator($(this).val()))
+      addBtn.removeAttr("disabled");
+    else
+      addBtn.attr("disabled", true);
+  });
+  //-------------------------------------------------------------------------------------
   /* -------------------------------------------------------------------------------- */
 
   /* ----------Validations for asset fields--------------------------------------- */

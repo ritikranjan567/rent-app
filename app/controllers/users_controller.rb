@@ -4,7 +4,12 @@ class UsersController < ApplicationController
     flash.now[:success] = "Profile pic deleted successfully"
     render 'registrations/edit'
   end
+
   def index_of_assets
     @assets = current_user.assets
+  end
+
+  def show
+    @user = User.find(params[:id])
   end
 end

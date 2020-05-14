@@ -21,4 +21,8 @@ module ApplicationHelper
     data_object.errors.messages[symbol][0] if data_object.errors.any?
   end
 
+  def get_unviewed_count
+    Notification.for_user(current_user.id)
+  end
+
 end
