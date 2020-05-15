@@ -12,8 +12,8 @@ module ApplicationHelper
     end
   end
 
-  def place_profile_picture
-    return current_user.profile_picture if (current_user.profile_picture.attached?)
+  def place_user_profile_picture(user)
+    return user.profile_picture if (user.profile_picture.attached?)
     "profile_img.png"
   end
 
