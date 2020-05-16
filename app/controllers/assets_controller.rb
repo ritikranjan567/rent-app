@@ -68,6 +68,9 @@ class AssetsController < ApplicationController
     if params[:sort_by] == "price"
       @assets = Asset.sort_by_price
       render partial: "assets/asset", collection: @assets
+    elsif params[:sort_by] == "distance"
+      @assets = sorted_assets_by_distance(params[:coordinates], params[:distance])
+      render partial: "assets/asset", collection: @assets
     end
   end
 
@@ -133,4 +136,12 @@ class AssetsController < ApplicationController
     return 365 if in_words == "Per Annum"
   end
 
+  def sorted_assets_by_distance(coords, distance)
+    locations = Location.near(coords, distance)
+    assets = Array.new
+    locations.each do |location|
+      assets += location.assets
+    end
+    assets
+  end
 end

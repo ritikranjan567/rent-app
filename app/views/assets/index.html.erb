@@ -3,6 +3,13 @@
     <%= label_tag :sort_by_price, "Sort by price" %>
     <%= radio_button_tag :sort_by, 'price' %>
   </div>
+  <div class="col-sm-3">
+    <%= label_tag :sort_by_distance, "Sort by distance from current Location:" %>
+    <%= radio_button_tag :sort_by, 'distance' %>
+  </div>
+  <div class="col-sm-2">
+    <%= number_field_tag :distance_value, 5, class: "form-control", style: "margin-top: 0;", disabled: true %>
+  </div>
 </div> <hr>
 <div class="row" id="show_assets_cards">
   <% if @assets.any? %>

@@ -72,19 +72,31 @@ $(document).on("turbolinks:load", function(){
   /* -------------------------------------------------------- */
   /* ------------- Filters Radio button ----------------------------- */
   $("input[name='sort_by']").on("click", function(){
+    var coords = [];
     var radio_element = $(this);
-    
-    $.ajax({
-      url: "/assets/sort_assets_filter",
-      type: "get",
-      data: { sort_by: radio_element.val() },
-      success: function(data) { 
-        var assets_container = $("#show_assets_cards");
-        assets_container.children().remove();
-        assets_container.append(data);         
-      },
-      error: function() {  console.log("some error occured"); } 
-    });
+    var dist = $("#distance_value");
+    if (radio_element.val() == "distance"){
+      dist.attr("disabled", false);
+      if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(position){
+          coords.push(Number(position.coords.latitude), Number(position.coords.longitude));
+          sendFilterData("distance", coords, dist.val());
+          dist.on("input", function(){
+            sendFilterData("distance", coords, $(this).val());
+          });
+        }, function(error){
+          if (error.code == error.PERMISSION_DENIED)
+            alert("Permission denied. There will be no result");
+        });
+      }
+      else{
+        alert("Browser does't support geolocation feature");
+      }
+    }
+    else{
+      dist.attr("disabled", true);
+      sendFilterData(radio_element.val());
+    }
   });
   /* --------------------------------------------------------------------- */
   /* --------------  display number of unviewed notifications ------------------------------- */
@@ -98,3 +110,17 @@ $(document).on("turbolinks:load", function(){
   }
   /* ------------------------------------------------------------------------------ */
 });
+
+function sendFilterData(sortBy, coords = [], distanceVal = 0){
+  $.ajax({
+    url: "/assets/sort_assets_filter",
+    type: "get",
+    data: { sort_by: sortBy, coordinates: coords, distance: distanceVal },
+    success: function(data) { 
+      var assets_container = $("#show_assets_cards");
+      assets_container.children().remove();
+      assets_container.append(data);         
+    },
+    error: function() {  console.log("some error occured"); } 
+  });
+}
