@@ -6,11 +6,11 @@
 
     <div class="form-group profile-upload text-center">
       <div class="user-profile-picture">
-        <span class="container" style="display: inline;"> <%= image_tag place_profile_picture, id: "upload_profile_pic" %> </span>
+        <span class="container" style="display: inline;"> <%= image_tag place_user_profile_picture(resource), id: "upload_profile_pic" %> </span>
         <span class="fa fa-trash" id="remove_profile_picture"></span>
         <label for="user_profile_picture"> <span class="fa fa-pencil" id="change_profile_pic"> </label>
       </div>
-      <%= f.file_field :profile_picture %>
+      <%= f.file_field :profile_picture, accept: "image/png, image/jpg, image/jpeg" %>
     </div>
 
     <div class="form-group">
