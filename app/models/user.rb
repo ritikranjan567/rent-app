@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   validates :email, uniqueness: true, presence: true, format: { with: Devise::email_regexp, message: "Invalid Email format" }
   validates :phone_number, uniqueness: true
-  validates :first_name, :last_name, presence: true, length: {minimum:3, maximum: 30}, format: { with: /([\w\-\']{2,})([\s]+)([\w\-\']{2,})/, message: "Invalid name format" }
+  validates :first_name, :last_name, presence: true, length: {minimum:3, maximum: 30}
   has_many :assets, dependent: :destroy
   has_one :wishlist, dependent: :destroy
   has_many :bookings, dependent: :destroy
