@@ -3,6 +3,10 @@
 <% if @bookings.any? %>
   <% @bookings.each do |booking| %>
     <%= render partial: 'assets/asset', locals: {asset: booking.asset} %>
+    <div class="col-sm-3" style="border: 1px solid rgba(0, 0, 0, 0.125);">
+      From: <%= booking.request.event_start_date %> <br>
+      To: <%= booking.request.event_end_date %>
+    </div>
   <% end %>
 <% else %>
   <h4>You haven't booked for anything yet</h4>  

@@ -1,0 +1,16 @@
+<h3>My booked Assets</h3>
+<hr>
+<% if @assets.any? %>
+  <% @assets.each do |asset| %>
+    <%= render  partial: 'assets/asset', locals: {asset: asset} %>
+    <div class="col-sm-3" style="border: 1px solid rgba(0, 0, 0, 0.125);">
+      From: <%= asset.booking.request.event_start_date %> <br>
+      To: <%= asset.booking.request.event_end_date %> <br>
+      By: <%= link_to show_user_path(asset.booking.user) do %>
+        <%= "#{asset.booking.user.first_name} #{asset.booking.user.last_name}" %>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <h4>No assets have been booked yet.</h4>
+<% end %>

@@ -33,6 +33,8 @@ gem 'bootstrap'
 #for background processing
 gem 'sinatra'
 gem 'sidekiq'
+#for authorizations
+gem 'pundit'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

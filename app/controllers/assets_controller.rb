@@ -33,6 +33,7 @@ class AssetsController < ApplicationController
 
   def show
     @asset = Asset.find(params[:id])
+    @booking = @asset.booking
   end
 
   def get_option_for_search_input

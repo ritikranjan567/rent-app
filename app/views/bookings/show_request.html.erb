@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <% if @request.asset.user.id == current_user.id %>
+  <% if policy(@request).update? %>
     <div class="col-sm-6 ml-auto mt-1">
       <%= link_to 'Reject', reject_request_bookings_path(@request), class: "btn btn-danger" %>
       <%= link_to 'Accept', accept_request_bookings_path(@request), class: "btn btn-success" %>

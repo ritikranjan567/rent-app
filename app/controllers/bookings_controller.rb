@@ -1,9 +1,9 @@
 class BookingsController < ApplicationController
   
   before_action :check_user, only: [:new_request, :create_request]
-  before_action :check_asset_owner, only: [:accept_request, :reject_request]
-  before_action :restrict_acceptance, only: [:accept_request]
-  before_action :restrict_cancel_booking, only: [:destroy]
+  before_action unless: :user_signed_in?, only: [:requests_index, :my_requests_index] do
+    redirect_to new_user_session_path
+  end
 
   def new_request
     @request = Asset.find(params[:asset_id]).requests.build
@@ -27,6 +27,7 @@ class BookingsController < ApplicationController
 
   def show_request
     @request = Request.find(params[:id])
+    authorize @request, :show?
   end
 
   def my_requests_index
@@ -36,6 +37,7 @@ class BookingsController < ApplicationController
   def reject_request
     @request = Request.find(params[:request_id])
     @request.request_status = "rejected"
+    authorize @request, :update?
     if @request.save
       flash[:success] = "You have rejected the request"
       redirect_to show_request_bookings_path(params[:request_id])
@@ -47,6 +49,7 @@ class BookingsController < ApplicationController
 
   def accept_request
     @request = Request.find(params[:request_id])
+    authorize @request, :update?
     @asset = @request.asset
     @booking = @request.build_booking
     @booking.user = @request.requestor
@@ -68,8 +71,13 @@ class BookingsController < ApplicationController
     @bookings = current_user.bookings
   end
 
+  def booked_assets
+    @assets = current_user.assets.where(available: false)
+  end
+
   def destroy
     @booking = Booking.find(params[:id])
+    authorize @booking, :destroy?
     @asset = @booking.asset
     @asset.update(available: true)
     @booking.delete
@@ -77,14 +85,18 @@ class BookingsController < ApplicationController
     redirect_to asset_path(@asset)
   end
 
-  protected
+  private
 
   def request_params
     params.require(:request).permit(:event_name, :event_description, :event_start_date, :event_end_date)
   end
 
   def check_user
-    if (Asset.find(params[:asset_id]).user.id == current_user.id)
+    if !user_signed_in?
+      flash[:warning] = "Sign-up/Sign-first "
+      redirect_to new_user_session_path
+
+    elsif (Asset.find(params[:asset_id]).user.id == current_user.id)
       flash[:danger] = "You are the owner of this asset."
       redirect_to asset_path(params[:asset_id])
     
@@ -98,30 +110,8 @@ class BookingsController < ApplicationController
     end
   end
 
-  def check_asset_owner
-    request = Request.find(params[:request_id])
-    if request.asset.user.id != current_user.id
-      flash[:danger] = "You are not the ownwer of the asset"
-      redirect_to show_request_bookings_path(params[:request_id])
-    end
-  end
-
   def reject_other_requests(asset, request)
     other_requests = asset.requests.where.not(id: request.id).update_all(request_status: "rejected")
   end
 
-  def restrict_acceptance
-    request = Request.find(params[:request_id])
-    if request.request_status == "accepted"
-      flash[:warning] = "Request already accepted"
-      redirect_to show_request_bookings_path(params[:request_id])
-    elsif !request.asset.available
-      flash[:warning] = "This asset already booked"
-      redirect_to show_request_bookings_path(params[:request_id])
-    end
-  end
-
-  def restrict_cancel_booking
-    
-  end
 end

@@ -13,6 +13,10 @@ class Request < ApplicationRecord
     self.asset.user.id
   end
 
+  def to_requestor_id
+    self.requestor.id
+  end
+
   def event_start_date_cannot_be_before_today
     errors.add(:event_start_date, "Event start date can't be before today's date") if event_start_date < Date.today
   end

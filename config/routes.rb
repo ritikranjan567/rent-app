@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       get :my_requests_index
       get 'show_request/:request_id/reject_request', to: 'bookings#reject_request', as: 'reject_request'
       get 'show_request/:request_id/accept_request', to: 'bookings#accept_request', as: 'accept_request'
+      get :booked_assets
     end
   end
 

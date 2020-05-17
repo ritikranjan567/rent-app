@@ -64,9 +64,9 @@
       <p style="color: blue; margin-bottom: 0;"><%= @asset.user.email %> </p>
       <p> <%= "#{@asset.user.country_code} #{@asset.user.phone_number}" %> </p>
     </div>
-    <% if !@asset.available && (@asset.user.id == current_user.id || @asset.booking.user.id == current_user.id) %>
+    <% if @booking && (@booking.user == current_user || @asset.user == current_user)  %>
       <div class="col-sm-3 text-center">
-        <%= link_to 'Cancel Booking', booking_path(@asset.booking), data: { confirm: "Are you sure you want to cancel booking?" }, method: :delete, class: "btn btn-danger btn-lg" %>
+        <%= link_to 'Cancel Booking', booking_path(@booking), data: { confirm: "Are you sure you want to cancel booking?" }, method: :delete, class: "btn btn-danger btn-lg" %>
       </div>
     <% end %>  
   </div>
@@ -86,16 +86,18 @@
   </div>
   <hr>
   <div class="row">
-      <div class="col-sm-4" style="color: orange; font-size: 1.3rem;">
-        <strong><%= "#{@asset.currency}#{@asset.price} #{@asset.payment_period}" %></strong>
-      </div>
+    <div class="col-sm-4" style="color: orange; font-size: 1.3rem;">
+      <strong><%= "#{@asset.currency}#{@asset.price} #{@asset.payment_period}" %></strong>
+    </div>
+    <% if @asset.available %>
       <div class="col-sm-8">
         <%= link_to "Request Booking", new_request_asset_bookings_path(@asset), class: "btn btn-primary", style: "float: right;"%>
         <%= link_to "Back", assets_path, class: "btn btn-warning", style: "float: right; margin-right: 0.5rem;" %>
       </div>
+    <% end %>  
   </div>
   <hr>
-  <% if !@asset.available %>
+  <% if @booking %>
     <div class="booked-stamp">
       <%= image_tag 'booked-stamp.png' %>
     </div>
