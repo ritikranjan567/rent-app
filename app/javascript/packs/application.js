@@ -27,10 +27,10 @@ $(document).on("turbolinks:load", function(){
 
   /* ------ Animate feeback alert ------------------- */
   if ($("#alert_info").css("display") != "none"){
-    $("#content").css("margin-top", "0.5rem;");
+    $("#content").addClass("mg-tp-sm");
   }
   else{
-    $("#content").css("margin-top", "3.3rem;");
+    $("#content").addClass("mg-tp-reg");
   }
 
   $("#alert_info").fadeTo(3500, 500).slideUp(500, function(){ $(this).slideUp(500); });
@@ -39,14 +39,13 @@ $(document).on("turbolinks:load", function(){
   var searchInput = document.getElementById("search");
   searchInput.addEventListener("input", function(){
     $.ajax({
-      url: "/searchoption",
+      url: "/search_option",
       type: "get",
       data: {search: searchInput.value},
       success: function(data) { 
-        $("#search_options").children().remove()
-        $("#search_options").append(data); 
+        $("#search_options").html(data);
       },
-      error: function() { console.log("search ajax error") }
+      error: function(error) { console.log("Some error", error) }
     });
   });
   /* -------------------------------------------------------------- */
@@ -113,7 +112,7 @@ $(document).on("turbolinks:load", function(){
 
 function sendFilterData(sortBy, coords = [], distanceVal = 0){
   $.ajax({
-    url: "/assets/sort_assets_filter",
+    url: "/assets/sort_and_filter_assets",
     type: "get",
     data: { sort_by: sortBy, coordinates: coords, distance: distanceVal },
     success: function(data) { 

@@ -14,4 +14,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :notifications, dependent: :destroy
+  delegate :wished_assets, to: :wishlist
 end

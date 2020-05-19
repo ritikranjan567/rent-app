@@ -1,6 +1,6 @@
 <div class="show-asset-container container col-sm-10">
   <div id="asset_images" class="carousel slide text-center" data-ride="carousel">
-    <% if !already_in_wishlist? @asset.id %>
+    <% unless is_already_wishlisted? @asset.id %>
       <%= link_to asset_add_to_wishlist_path(@asset), class: "btn btn-link wishlist-button" do %>
         <span class="fa fa-plus-square" style="color: #b6f769; font-size: xx-large;" title="Add to your wishlist"></span>
       <% end %>

@@ -8,7 +8,8 @@ class Request < ApplicationRecord
   has_one :booking, dependent: :destroy
   belongs_to :requestor, class_name: "User"
   validate :event_start_date_cannot_be_before_today, :event_end_cannot_be_before_start_date
-
+  after_create :send_new_request_notifications_to_user
+  after_update :send_update_notifcations_to_user
   def to_user_id
     self.asset.user.id
   end
@@ -22,5 +23,18 @@ class Request < ApplicationRecord
   end
   def event_end_cannot_be_before_start_date
     errors.add(:event_end_date, "Event's end date can't be before event's start date") if event_end_date < event_start_date
+  end
+
+  def self.destroy_expired_requests
+    where("(event_start_date < ? and request_status in (?,?)) or event_end_date < ?",
+    Date.today.to_s, 'pending', 'rejected', Date.today.to_s).destroy_all
+  end
+
+  def self.close_bookings
+    requests = where("event_end_date < ? and request_status = ?", Date.today.to_s, 'accepted')
+    if requests.any?
+      requests.each { |request| request.asset.update!(available: true); request.booking.destroy; }
+      requests.destroy_all
+    end
   end
 end

@@ -1,0 +1,14 @@
+<div class="container col-sm-10" id="show_requests_container">
+  <h3> My Requested Assets </h3> <hr>
+  
+  <% if @assets.any? %>
+    <% @assets.each do |asset| %>
+      <% next unless asset.requests.any? %>
+      <h5>
+        <%= link_to "#{asset.name}" ,asset_path(asset) %>
+      </h5> <hr>
+      <%= render partial: 'bookings/request', collection: asset.requests %>
+      <hr>
+    <% end %>
+  <% end %>
+</div>

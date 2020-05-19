@@ -5,6 +5,28 @@ class BookingsController < ApplicationController
     redirect_to new_user_session_path
   end
 
+  def index
+    @bookings = current_user.bookings
+  end
+
+  def booked_assets
+    @assets = current_user.assets.where(available: false)
+  end
+
+  def destroy
+    @booking = Booking.find(params[:id])
+    #authorize @booking, policy_class: BookingPolicy
+    @asset = @booking.asset
+    @asset.update(available: true)
+    if @booking.destroy
+      flash[:success] = "Booking has been successfully cancelled"
+      redirect_to asset_path(@asset)
+    else
+      flash[:danger] = "Unable to cancel booking"
+      redirect_to asset_path(@asset)
+    end
+  end
+
   def new_request
     @request = Asset.find(params[:asset_id]).requests.build
   end
@@ -21,8 +43,8 @@ class BookingsController < ApplicationController
     end
   end
 
-  def requests_index
-    @requests = current_user.requests
+  def requests
+    @assets = current_user.assets
   end
 
   def show_request
@@ -57,33 +79,18 @@ class BookingsController < ApplicationController
     @asset.available = false
     @request.request_status = "accepted"
     reject_other_requests(@asset, @request)
-    if @request.save && @booking.save && @asset.save
-      flash[:success] = "You have accepted the request and #{@asset.name} is booked."
-      redirect_to show_request_bookings_path(@request)
-    else
-      flash[:danger] = "Unable to accept the request due to some error!"
-      redirect_to show_request_bookings_path(@request)
+    ActiveRecord::Base.transaction do
+      @request.save!
+      @asset.save!
+      @booking.save!
     end
-
+    flash[:success] = "This requested is accepted"
+    redirect_to show_request_bookings_path(@request)
+    rescue ActiveRecord::RecordInvalid
+      flash[:danger] = "Unable accept request due to some error"
+      redirect_to show_request_bookings_path(@request)
   end
 
-  def index
-    @bookings = current_user.bookings
-  end
-
-  def booked_assets
-    @assets = current_user.assets.where(available: false)
-  end
-
-  def destroy
-    @booking = Booking.find(params[:id])
-    authorize @booking, :destroy?
-    @asset = @booking.asset
-    @asset.update(available: true)
-    @booking.delete
-    flash[:success] = "Booking successfully cancelled"
-    redirect_to asset_path(@asset)
-  end
 
   private
 

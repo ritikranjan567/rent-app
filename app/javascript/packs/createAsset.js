@@ -88,7 +88,7 @@ var AssetValidator = (function(){
   };
 
   var _tagsValidator = function(tagName){
-    var regex = /^[A-Z][a-z]{2,20}$/;
+    var regex = /^[A-Z][a-zA-Z ]{2,20}$/;
     return regex.test(tagName);
   };
   return {
@@ -166,6 +166,7 @@ $(document).on("turbolinks:load", function(){
     //console.log(event_tags.val());
     
     input.val("");
+    $(this).attr("disabled", true);
   });
   //---------------------------------------------------------------------
   //-----Removing tags-------------------------------------------------------

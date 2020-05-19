@@ -35,6 +35,9 @@ gem 'sinatra'
 gem 'sidekiq'
 #for authorizations
 gem 'pundit'
+#for cron jobs
+gem 'whenever', require: false
+gem 'sidekiq-scheduler'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

@@ -5,7 +5,7 @@ class BookingPolicy < ApplicationPolicy
     end
 
     def destroy?
-      return true #if user.present? && ((booking.asset.user == user) || (booking.user == user))
+      user.present? && ((booking.asset.user == user) || (booking.user == user))
     end
 
     private

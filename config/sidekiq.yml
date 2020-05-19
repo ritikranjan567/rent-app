@@ -1,0 +1,4 @@
+:schedule:
+  destroy_expired_request_job:
+    every: '1m'
+    class: DestroyExpiredRequestJob
