@@ -141,7 +141,7 @@ $(document).on("turbolinks:load", function(){
     $("#upload_profile_pic").attr("src", "/profile_img.png");
     $("#user_profile_picture").val("");
     $.ajax({
-      url: "/deleteprofilepic",
+      url: "/delete_profile_picture",
       type: "DELETE"
     });
   });

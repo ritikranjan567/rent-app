@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'notifications/index'
   get 'assets/index'
   devise_for :users
+
   get 'users/:id', to: 'users#show', as: 'show_user'
   delete 'delete_profile_picture', to: 'users#delete_profile_picture', as: 'delete_profile_picture'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
@@ -33,7 +34,7 @@ Rails.application.routes.draw do
   end
   resources :notes, path: 'notes/:request_id', only: [:create, :index, :destroy]
 
-  get 'myassets', to: 'users#index_of_assets', as: 'my_assets'
+  get 'my_assets', to: 'users#assets', as: 'my_assets'
   get 'search_option', to: 'assets#get_option_for_search_input', as: 'search_option'
   root 'assets#index'
 

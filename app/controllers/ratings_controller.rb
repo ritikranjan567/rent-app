@@ -24,8 +24,8 @@ class RatingsController < ApplicationController
   end
 
   def check_user
-    if !user_signed_in?
-      flash[:warning] = "Sign up/in first"
+    unless user_signed_in?
+      flash[:warning] = "Sign up/in is required for this action"
       redirect_to new_user_session_path
     end
   end
