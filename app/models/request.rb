@@ -41,10 +41,6 @@ class Request < ApplicationRecord
   end
 
   def self.close_bookings
-    requests = where("event_end_date < ? and request_status = ?", Date.today.to_s, 'accepted')
-    if requests.any?
-      requests.each { |request| request.asset.update!(available: true); request.booking.destroy; }
-      requests.destroy_all
-    end
+    requests = where("event_end_date < ? and request_status = ?", Date.today.to_s, 'accepted').destroy_all
   end
 end
