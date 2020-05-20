@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     collection do
       get :sort_and_filter_assets
     end
-    resources :ratings, only: [:index, :create, :edit, :destroy]
+    resources :ratings, only: [:index, :create]
     get :add_to_wishlist
     delete :remove_from_wishlist
   end

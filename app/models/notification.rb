@@ -8,6 +8,6 @@ class Notification < ApplicationRecord
   scope :unviewed, ->{ where(viewed: false) }
 
   def self.for_user(user_id)
-    Notification.where(user_id: user_id).unviewed.count
+    Notification.where(user_id: user_id).unviewed.size
   end
 end

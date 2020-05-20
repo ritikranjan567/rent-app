@@ -5,6 +5,8 @@ class AssetsController < ApplicationController
   before_action :phone_number_verification, only: [:new, :create, :destroy], if: :user_signed_in?
   before_action :restrict_add_to_wishlist, only: [:add_to_wishlist]
   rescue_from ActiveRecord::RecordInvalid, with: :unable_to_register_location
+  before_action :set_asset, only: [:show, :destroy]
+  before_action :authorize_destroy, only: [:destroy]
   def index
     if params[:search]
       @assets = search_result(params[:search])
@@ -34,8 +36,18 @@ class AssetsController < ApplicationController
   end
 
   def show
-    @asset = Asset.find(params[:id])
     @booking = @asset.booking
+  end
+
+  def destroy
+    @asset.destroy
+    if @asset.destroyed?
+      flash[:success] = "Asset has been destroyed successfully"
+      redirect_to root_path
+    else
+      flash[:danger] = "Unable to destroy the asset"
+      redirect_to asset_path(@asset)
+    end
   end
 
   def get_option_for_search_input
@@ -50,7 +62,7 @@ class AssetsController < ApplicationController
     redirect_to asset_path(params[:asset_id])
   end
   
-  def wished_assets
+  def wished_assetsdestroy
     if current_user.wishlist
       @assets = Asset.wished_assets_of_user(current_user.wished_assets.pluck(:asset_id))
     else
@@ -105,5 +117,17 @@ class AssetsController < ApplicationController
   def unable_to_register_location
     flash.now[:danger] = "Unable generate coordinates for your location"
     render 'assets/new'
+  end
+
+  def set_asset
+    @asset = Asset.find(params[:id])
+  end
+
+  def authorize_destroy
+    @asset = Asset.find(params[:id])
+    unless current_user.id.eql? @asset.user_id 
+      flash[:warning] = "You are not authorized for this action"
+      redirect_to asset_path(@asset)
+    end
   end
 end

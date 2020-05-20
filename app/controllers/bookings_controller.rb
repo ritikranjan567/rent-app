@@ -18,7 +18,9 @@ class BookingsController < ApplicationController
     @asset = @booking.asset
     @asset.update(available: true)
     @booking.request.change_status_to_pending_for_non_expired_requests(@booking.asset_id)
-    if @booking.destroy
+    SendCancelBookingNotificationJob.perform_later(to_user_id(@booking.request), @asset, "Booking for #{@asset.name} cancelled by #{current_user.first_name}")
+    
+    if @booking.request.destroy
       flash[:success] = "Booking has been successfully cancelled"
       redirect_to asset_path(@asset)
     else
@@ -117,4 +119,11 @@ class BookingsController < ApplicationController
     end
   end
 
+  def to_user_id(request)
+    if current_user.id.eql?(request.requestor_id)
+      request.asset.user_id
+    else
+      request.requestor_id
+    end
+  end
 end
