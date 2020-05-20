@@ -1,6 +1,7 @@
 class PhoneVerificationsController < ApplicationController
   
   before_action :check_unique_cellId, only: [:create]
+  before_action :restrict_new, only: [:new]
 
   def new
   end
@@ -51,5 +52,10 @@ class PhoneVerificationsController < ApplicationController
       redirect_to new_phone_verification_path
     end
   end
-  
+  def restrict_new
+    if user_signed_in? && current_user.phone_verification_status
+      flash[:warning] = "You have already verified your phone number"
+      redirect_back(fallback_location: root_path)
+    end
+  end
 end
