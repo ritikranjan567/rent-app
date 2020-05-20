@@ -11,8 +11,10 @@ var AssetValidator = (function(){
       message.assetName = "Invalid name";
       return false;
     }
-    else
+    else{
+      message.assetName = "ok";
       return true;
+    }
   };
   var _validateDimension = function(dimension){
     var regex = /^[0-9]{1,3}[a-zA-z.]{1,10} [x|X] [0-9]{1,3}[a-zA-z.]{1,10}/;
@@ -24,8 +26,10 @@ var AssetValidator = (function(){
       message.assetDimension = "Unsupported dimension formate";
       return false;
     }
-    else
+    else{
+      message.assetDimension = "ok";
       return true;
+    }
   };
 
   var _validateDescription = function(description){
@@ -33,8 +37,10 @@ var AssetValidator = (function(){
       message.assetDescription = "Length of the description should be atleast 20 charecters";
       return false;
     }
-    else
+    else{
+      message.assetDescription = "ok";
       return true;
+    }
   };
 
   var _validateAssetPrice = function(price){
@@ -46,8 +52,10 @@ var AssetValidator = (function(){
       message.assetPrice = "Enter valid price";
       return false;
     }
-    else
+    else{
+      message.assetPrice = "ok";
       return true;
+    }
   };
 
   var _validateLocationText = function(text){
@@ -60,8 +68,10 @@ var AssetValidator = (function(){
       message.location = "Invalid formate";
       return false;
     }
-    else
+    else{
+      message.location = "ok";
       return true;
+    }
   };
 
   var _validatePincode = function(pincode){
@@ -74,8 +84,10 @@ var AssetValidator = (function(){
       message.pincode = "Invalid formate";
       return false;
     }
-    else
+    else{
+      message.pincode = "ok";
       return true;
+    }
   };
 
   var _validateAddress = function(address){
@@ -83,8 +95,10 @@ var AssetValidator = (function(){
       message.address = "Enter the particulars"
       return false;
     }
-    else
+    else{
+      message.address = "ok";
       return true;
+    }
   };
 
   var _tagsValidator = function(tagName){
@@ -104,7 +118,7 @@ var AssetValidator = (function(){
 })();
 
 function showWarn(element, errorType, validationFunction){
-  
+  postButtonManager();
   var valStatus = validationFunction(element.val());
   if (!valStatus){
     element.css("border", "2px solid red");
@@ -117,23 +131,27 @@ function showWarn(element, errorType, validationFunction){
 }
 /* ---------For reading and displaying uploaded images-------------------------- */
 function readImage() {
+  postButtonManager();
   var files = event.target.files;
   var preview = $(".preview-images");
-
+  preview.children().remove();
+  if (files.length > 6){
+    message.pictures = "Please limit your uplaods upto 6 pictures";
+    preview.next().text(message.pictures);
+    return;
+  }
+  else{
+    message.pictures = "ok"
+    preview.next().text("");
+  }
   for(i = 0; i < files.length; i++){
     var file = files[i];
-
-    if(!file.type.match("image")){
-      message.image = "File type is not image"
-      continue;
-    }
 
     var picReader = new FileReader();
 
     picReader.addEventListener("load", function(event){
       var picReader = event.target;
       var html =  '<div class="preview-image">' +
-                    '<div class="fa fa-times image-cancel"></div>' +
                     '<img src= "' + picReader.result + '">' 
                   '</div>';
       preview.append(html);
@@ -163,7 +181,7 @@ $(document).on("turbolinks:load", function(){
                 '</div>';
     viewTags.append(html);
     event_tags.val(event_tags.val() + input.val() + ",");
-    //console.log(event_tags.val());
+    console.log(event_tags.val());
     
     input.val("");
     $(this).attr("disabled", true);
@@ -173,7 +191,7 @@ $(document).on("turbolinks:load", function(){
   $(document).on("click",".remove-event-tag", function(){
     var event_tags = $("#event_tags");
     event_tags.val(event_tags.val().replace(($(this).parent().text() + ","), ""));
-    //console.log(event_tags.val());
+    console.log(event_tags.val());
 
     $(this).parent().remove();
   });
@@ -226,3 +244,13 @@ $(document).on("turbolinks:load", function(){
 });
 
 
+function postButtonManager(){
+  var postBtn = $("#post_ad");
+  for (const prop in message){
+    if (message[prop] != "ok"){
+      postBtn.attr("disabled", true);
+      return;
+    }
+  }
+  postBtn.removeAttr("disabled");
+}

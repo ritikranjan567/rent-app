@@ -1,7 +1,7 @@
 class BookingsController < ApplicationController
   
   before_action :check_user, only: [:new_request, :create_request]
-  before_action unless: :user_signed_in?, only: [:requests_index, :my_requests_index] do
+  before_action unless: :user_signed_in?, only: [:index, :requested_assets, :requests] do
     redirect_to new_user_session_path
   end
 
@@ -15,9 +15,9 @@ class BookingsController < ApplicationController
 
   def destroy
     @booking = Booking.find(params[:id])
-    #authorize @booking, policy_class: BookingPolicy
     @asset = @booking.asset
     @asset.update(available: true)
+    @booking.request.change_status_to_pending_for_non_expired_requests(@booking.asset_id)
     if @booking.destroy
       flash[:success] = "Booking has been successfully cancelled"
       redirect_to asset_path(@asset)
@@ -43,8 +43,7 @@ class BookingsController < ApplicationController
     end
   end
 
-  def requests
-    redirect_to new_user_session_path unless user_signed_in?
+  def requested_assets
     @assets = current_user.assets
   end
 
@@ -53,8 +52,8 @@ class BookingsController < ApplicationController
     authorize @request, :show?
   end
 
-  def my_requests_index
-    @requests = Request.where("requestor_id = ?", current_user.id)
+  def requests
+    @requests = Request.requests_by_user(current_user.id)
   end
 
   def reject_request
@@ -79,7 +78,7 @@ class BookingsController < ApplicationController
     @booking.asset = @request.asset
     @asset.available = false
     @request.request_status = "accepted"
-    reject_other_requests(@asset, @request)
+    @request.reject_other_overlapping_requests(@asset.id)
     ActiveRecord::Base.transaction do
       @request.save!
       @asset.save!
@@ -116,10 +115,6 @@ class BookingsController < ApplicationController
       flash[:warning] = "Verify your phone number to request"
       redirect_to new_phone_verification_path
     end
-  end
-
-  def reject_other_requests(asset, request)
-    other_requests = asset.requests.where.not(id: request.id).update_all(request_status: "rejected")
   end
 
 end

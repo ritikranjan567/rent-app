@@ -1,4 +1,8 @@
 :schedule:
   destroy_expired_request_job:
-    every: '1m'
+    every: '12h'
     class: DestroyExpiredRequestJob
+  
+  destroy_expired_bookings_job:
+    every: '13h'
+    class: DestroyExpiredBookingsJob

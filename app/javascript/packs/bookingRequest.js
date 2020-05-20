@@ -45,7 +45,7 @@ var Validator = (function(){
 })();
 
 function requestWarn(element, validatorFunction, messageType){
-  //requestButtonManager();
+  requestButtonManager();
   if (!validatorFunction(element.val())){
     element.css("border", "0.165rem solid red");
     element.next().css({"display": "block", "color": "red"}).text(msg[messageType]);

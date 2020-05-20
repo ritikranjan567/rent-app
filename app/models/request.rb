@@ -10,12 +10,22 @@ class Request < ApplicationRecord
   validate :event_start_date_cannot_be_before_today, :event_end_cannot_be_before_start_date
   after_create :send_new_request_notifications_to_user
   after_update :send_update_notifcations_to_user
+  scope :requests_by_user, ->(user_id) { where(requestor_id: user_id)}
+  
   def to_user_id
-    self.asset.user.id
+    self.asset.user_id
   end
 
   def to_requestor_id
-    self.requestor.id
+    self.requestor_id
+  end
+
+  def reject_other_overlapping_requests(asset_id)
+    Request.where("asset_id = ? and id != ? and event_start_date < ?", asset_id, self.id, self.event_end_date.to_s).update_all(request_status: 'rejected')
+  end
+
+  def change_status_to_pending_for_non_expired_requests(asset_id)
+    Request.where("id != ? and asset_id = ? and event_start_date > ?", self.id, asset_id, Date.today.to_s).update_all(request_status: 'pending')
   end
 
   def event_start_date_cannot_be_before_today

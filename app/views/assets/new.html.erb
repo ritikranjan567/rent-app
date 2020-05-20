@@ -68,9 +68,10 @@
           <label for="asset_pictures" class= "fa fa-plus btn btn-primary">
             Add Photos
           </label>
-          <%= f.file_field :pictures, multiple: true, accept: "image/jpg, image/jpeg, image/png" %>
+          <%= f.file_field :pictures, multiple: true, accept: "image/jpg, image/jpeg, image/png", required: true %>
           <div class="preview-images">
           </div>
+          <div class="feedback-warning"></div>
         </div>
         <p style="font-size: 0.7rem; color: blue;">First image will be displayed while listing</p>
     </div>
@@ -79,26 +80,26 @@
       <h3>Location Details:</h3>
       <div class="form-group">
         <%= f.label :address, "*Address:" %>
-        <%= f.text_field :address, placeholder: "Enter plot no., landmark, road/lane, Floor no.", class: "form-control" %>
+        <%= f.text_field :address, placeholder: "Enter plot no., landmark, road/lane, Floor no.", class: "form-control", required: true %>
         <div class="feedback-warning"></div>
       </div>
       <div class="form-group">
         <%= label_tag :place, "*Place/Street Name:" %>
-        <%= text_field_tag :place, nil, placeholder: "Area, Street or square name", class: "form-control" %>
+        <%= text_field_tag :place, nil, placeholder: "Area, Street or square name", class: "form-control", required: true %>
         <div class="feedback-warning"></div>
       </div>
       <div style="display: flex;">
         <div class="form-group col-sm-9" style="padding-left: 0;">
           <%= label_tag :city, "*City:"%>
-          <%= text_field_tag :city, nil, placeholder: "City name", class: "form-control"%>
+          <%= text_field_tag :city, nil, placeholder: "City name", class: "form-control", required: true%>
           <div class="feedback-warning"></div>
         </div>
         <div class="form-group col-3" style="padding-right: 0;">
           <%= label_tag :pincode, "*Pincode:" %>
-          <%= text_field_tag :pincode, nil, class: "form-control" %>
+          <%= text_field_tag :pincode, nil, class: "form-control", required: true %>
         </div>
       </div>
     </div>
-    <%= f.submit "POST AD.", class: "btn btn-primary" %>
+    <%= f.submit "POST AD.", class: "btn btn-primary", id: "post_ad" %>
   <% end %>
 </div>

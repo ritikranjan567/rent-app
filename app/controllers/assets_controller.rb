@@ -4,7 +4,7 @@ class AssetsController < ApplicationController
   before_action :ensure_authorized_user, only: [:new, :create, :destroy, :add_to_wishlist]
   before_action :phone_number_verification, only: [:new, :create, :destroy], if: :user_signed_in?
   before_action :restrict_add_to_wishlist, only: [:add_to_wishlist]
-
+  rescue_from ActiveRecord::RecordInvalid, with: :unable_to_register_location
   def index
     if params[:search]
       @assets = search_result(params[:search])
@@ -96,10 +96,14 @@ class AssetsController < ApplicationController
     end
     if current_user.wishlist
       if current_user.wished_assets.find_by(asset_id: params[:asset_id])
-        flash[:warning] = "Already in your wishlist"
+        flash[:warning] = "Already exists in your wishlist "
         redirect_to asset_path(params[:asset_id])
       end  
     end
   end
   
+  def unable_to_register_location
+    flash.now[:danger] = "Unable generate coordinates for your location"
+    render 'assets/new'
+  end
 end
