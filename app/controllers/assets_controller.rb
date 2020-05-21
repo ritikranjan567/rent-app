@@ -87,6 +87,14 @@ class AssetsController < ApplicationController
     end
   end
 
+  def wished_assets
+    if current_user.wishlist
+      @assets = current_user.wished_assets
+    else
+      @assets = Asset.none
+    end
+  end
+
   private
 
   def ensure_authorized_user

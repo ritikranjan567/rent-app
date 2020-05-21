@@ -16,12 +16,12 @@ Rails.application.routes.draw do
     end
     collection do
       get :sort_and_filter_assets
+      get :wished_assets
     end
     resources :ratings, only: [:index, :create]
     get :add_to_wishlist
     delete :remove_from_wishlist
   end
-  get 'wished_assets', to: 'assets#wished_assets', as: 'wished_assets'
   resources :bookings, only: [:index, :destroy] do
     collection do
       get :requests

@@ -2,7 +2,9 @@
 <hr>
 <div class="row">
   <% if @assets.any? %>
-    <%= render partial: 'assets/asset', collection: @assets %>
+    <% @assets.each do |wished_asset|  %>
+      <%= render partial: 'assets/asset', locals: { asset: Asset.find(wished_asset.asset_id) } %>
+    <% end %>
     <% else %>
     <h4>Your wishlist is empty.</h4>
   <% end %>
