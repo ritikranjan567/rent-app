@@ -15,6 +15,7 @@ class BookingsController < ApplicationController
 
   def destroy
     @booking = Booking.find(params[:id])
+    authorize @booking
     @asset = @booking.asset
     @asset.update(available: true)
     @booking.request.change_status_to_pending_for_non_expired_requests(@booking.asset_id)

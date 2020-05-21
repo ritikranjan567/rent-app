@@ -64,7 +64,7 @@
       <p style="color: blue; margin-bottom: 0;"><%= @asset.user.email %> </p>
       <p> <%= "#{@asset.user.country_code} #{@asset.user.phone_number}" %> </p>
     </div>
-    <% if @booking && (@booking.user == current_user || @asset.user == current_user)  %>
+    <% if @booking && policy(@booking).destroy?  %>
       <div class="col-sm-3 text-center">
         <%= link_to 'Cancel Booking', booking_path(@booking), data: { confirm: "Are you sure you want to cancel booking?" }, method: :delete, class: "btn btn-danger btn-lg" %>
       </div>

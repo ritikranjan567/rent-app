@@ -1,4 +1,13 @@
 <div class="note-container">
   <strong> <%= "#{note.user.first_name} #{note.user.last_name}" %> </strong>
-  <p> <%= note.content %> </p>
+  <div class="row">
+    <div class="col-sm-10"><p> <%= note.content %> </p></div>
+    <% if policy(note).destroy? %>
+      <div class="col-sm-2">
+        <%= link_to note_path(note.request_id, note.id), data: { confirm: "Are you sure?" }, method: :delete, class: "text-red-md right-align" do %>
+          <span class="fa fa-trash">Delete</span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>

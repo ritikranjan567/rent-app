@@ -45,7 +45,6 @@ var Validator = (function(){
 })();
 
 function requestWarn(element, validatorFunction, messageType){
-  requestButtonManager();
   if (!validatorFunction(element.val())){
     element.css("border", "0.165rem solid red");
     element.next().css({"display": "block", "color": "red"}).text(msg[messageType]);
@@ -54,6 +53,7 @@ function requestWarn(element, validatorFunction, messageType){
     element.next().text("");
     element.css("border", "0.165rem solid green");
   }
+  requestButtonManager();
 }
 
 $(document).on("turbolinks:load", function(){

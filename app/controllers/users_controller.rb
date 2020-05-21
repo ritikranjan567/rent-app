@@ -6,7 +6,10 @@ class UsersController < ApplicationController
   end
 
   def assets
-    redirect_to new_user_session_path; return unless user_signed_in?
+    unless user_signed_in?
+      redirect_to new_user_session_path
+      return      
+    end
     @assets = current_user.assets
   end
 

@@ -18,6 +18,18 @@ class NotesController < ApplicationController
     @notes = @request.notes  
   end
 
+  def destroy
+    @note = Note.find(params[:id])
+    authorize @note
+    if @note.destroy
+      flash[:success] = 'Note has been successfully deleted.'
+      redirect_to notes_path
+    else
+      flash[:error] = 'Unable to delete the request'
+      redirect_to notes_path
+    end
+  end
+  
   private
 
   def note_params
