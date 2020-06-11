@@ -1,48 +1,60 @@
-<div class="container col-sm-7" id="show_request_container">
-  <div class="request-heading">
-    <h3>
-      For: <%= link_to asset_path(@request.asset) do %>
-      <strong> <%= @request.asset.name %> </strong> <% end %>
-    </h3>
-    <h5> By: <%= link_to "#{@request.requestor.first_name} #{@request.requestor.last_name}", show_user_path(@request.requestor) %> </h5>
-  </div>
-  <hr>
-  <div class="request-body">
-    For Event: <p style="display: inline; background-color: #e8f5bf; padding: 0.3rem;"> <%= @request.event_name %> </p>
-    <br> <br>
-    Description: <br>
-    <p><%= @request.event_description %></p>
-    <br>
+<div class="row container mr-1 col-sm-11">
+  <div class="col-sm-7" id="show_request_container">
+    <div class="request-heading">
+      <h3>
+        For: <%= link_to asset_path(@request.asset) do %>
+        <strong> <%= @request.asset.name %> </strong> <% end %>
+      </h3>
+      <h5> By: <%= link_to "#{@request.requestor.first_name} #{@request.requestor.last_name}", show_user_path(@request.requestor) %> </h5>
+      <div class="highlight"> <h5><%= "#{@request.requested_price}" %></h5> </div>
+    </div>
+    <hr>
+    <div class="request-body">
+      For Event: <p class="inline-style-box"> <%= @request.event_name %> </p>
+      <br> <br>
+      Description: <br>
+      <p><%= @request.event_description %></p>
+      <br>
 
-    <div style="margin-top: 0.6rem; display: flex;">
-      <div class="col-sm-3">
-        Event Start Date:
-        <div datetime=<%= @request.event_start_date %> class="start-date"> 
-          <div class="day"></div>
-          <div class="month"></div>
-          <div class="date"></div>
-          <div class="year"></div>
+      <div class="show-request-date-container">
+        <div class="col-sm-3">
+          Event Start Date:
+          <div datetime=<%= @request.event_start_date %> class="start-date"> 
+            <div class="day"></div>
+            <div class="month"></div>
+            <div class="date"></div>
+            <div class="year"></div>
+          </div>
         </div>
-      </div>
-      <div class="col-sm-3">
-        Event End Date:
-        <div datetime=<%= @request.event_end_date %> class="end-date"> 
-          <div class="day"></div>
-          <div class="month"></div>
-          <div class="date"></div>
-          <div class="year"></div>
+        <div class="col-sm-3">
+          Event End Date:
+          <div datetime=<%= @request.event_end_date %> class="end-date"> 
+            <div class="day"></div>
+            <div class="month"></div>
+            <div class="date"></div>
+            <div class="year"></div>
+          </div>
         </div>
       </div>
     </div>
+
+    <% if policy(@request).update? %>
+      <div class="col-sm-6 ml-auto mt-1">
+        <%= link_to 'Reject', reject_request_bookings_path(@request), class: "btn btn-danger" %>
+        <%= link_to 'Accept', accept_request_bookings_path(@request), class: "btn btn-success" %>
+      </div>
+    <% end %>
+
   </div>
 
-  <% if policy(@request).update? %>
-    <div class="col-sm-6 ml-auto mt-1">
-      <%= link_to 'Reject', reject_request_bookings_path(@request), class: "btn btn-danger" %>
-      <%= link_to 'Accept', accept_request_bookings_path(@request), class: "btn btn-success" %>
-    </div>
-  <% end %>
-
-  <%= link_to 'View notes', notes_path(@request.id), class: "btn btn-link" %>
-  
+  <div class="col-sm-5">
+    <h4><strong>Notes here</strong></h4> <hr>
+    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#add_note_container"><span class="fa fa-plus-circle">Add notes</span></button>
+    <%= render 'notes/new_note' %>
+    <% if @request.notes.any? %>
+      <div class="notes-container">
+        <%= render partial: 'notes/note', collection: @request.notes %>
+      </div>  
+    <% end %>
+  </div>
 </div>

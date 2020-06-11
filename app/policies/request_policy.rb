@@ -10,9 +10,12 @@ class RequestPolicy < ApplicationPolicy
   end
 
   def update?
-    user.present? && request.asset.user == user && request.request_status != 'accepted' && request.asset.available
+    user.present? && request.asset.user == user && request.request_status != 'accepted'
   end
 
+  def destroy?
+    user.present? && (request.requestor.eql?(user) || request.asset.user.eql?(user))
+  end
   private
 
   def request

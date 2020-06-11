@@ -2,7 +2,7 @@ module Notificable
   extend ActiveSupport::Concern
 
   included do
-    has_many :notifications, as: :item
+    has_many :notifications, as: :item, dependent: :destroy
   end
 
   def send_new_request_notifications_to_user

@@ -6,7 +6,7 @@ class AssetsController < ApplicationController
   before_action :restrict_add_to_wishlist, only: [:add_to_wishlist]
   rescue_from ActiveRecord::RecordInvalid, with: :unable_to_register_location
   before_action :set_asset, only: [:show, :destroy]
-  before_action :authorize_destroy, only: [:destroy]
+
   def index
     if params[:search]
       @assets = search_result(params[:search])
@@ -36,12 +36,11 @@ class AssetsController < ApplicationController
   end
 
   def show
-    @booking = @asset.booking
   end
 
   def destroy
-    @asset.destroy
-    if @asset.destroyed?
+    authorize @asset
+    if @asset.destroyed
       flash[:success] = "Asset has been destroyed successfully"
       redirect_to root_path
     else
@@ -60,14 +59,6 @@ class AssetsController < ApplicationController
     @wished_asset = @wishlist.wished_assets.create!(asset_id: params[:asset_id])
     flash[:success] = "Asset has been added to your wishlist"
     redirect_to asset_path(params[:asset_id])
-  end
-  
-  def wished_assetsdestroy
-    if current_user.wishlist
-      @assets = Asset.wished_assets_of_user(current_user.wished_assets.pluck(:asset_id))
-    else
-      @assets = Asset.none
-    end
   end
 
   def remove_from_wishlist
@@ -89,9 +80,9 @@ class AssetsController < ApplicationController
 
   def wished_assets
     if current_user.wishlist
-      @assets = current_user.wished_assets
+      @wished_assets = current_user.wished_assets
     else
-      @assets = Asset.none
+      @wished_assets = WishedAsset.none
     end
   end
 

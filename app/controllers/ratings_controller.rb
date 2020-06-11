@@ -2,14 +2,15 @@ class RatingsController < ApplicationController
 
   before_action :check_user, only: [:create]
   def index
-    @ratings_and_feedbacks = Asset.find(params[:asset_id]).ratings
+    @ratings_and_feedbacks = Asset.find_by(id: params[:asset_id]).ratings
   end
   
   def create
     @asset = Asset.find(params[:asset_id])
-    @rating_and_feedback = @asset.ratings.build(rating_params)
-    @rating_and_feedback.user_id = current_user.id
-    if @rating_and_feedback.save
+    @rating = @asset.ratings.build(rating_params)
+    authorize @rating
+    @rating.user = current_user
+    if @rating.save
       flash[:success] = "Rating posted successfully"
       redirect_to asset_path(params[:asset_id])
     else

@@ -35,7 +35,9 @@ class BookingsController < ApplicationController
   end
 
   def create_request
-    @request = Asset.find(params[:asset_id]).requests.build(request_params)
+    @asset = Asset.find(params[:asset_id])
+    @request = @asset.requests.build(request_params)
+    @request.requested_price = @asset.currency + @asset.price.to_s + " " + @asset.payment_period
     @request.requestor = current_user
     if @request.save
       flash[:success] = "Request is sent to the owner successfully"
@@ -79,7 +81,7 @@ class BookingsController < ApplicationController
     @booking = @request.build_booking
     @booking.user = @request.requestor
     @booking.asset = @request.asset
-    @asset.available = false
+    #@asset.available = false
     @request.request_status = "accepted"
     @request.reject_other_overlapping_requests(@asset.id)
     ActiveRecord::Base.transaction do
@@ -93,7 +95,6 @@ class BookingsController < ApplicationController
       flash[:danger] = "Unable accept request due to some error"
       redirect_to show_request_bookings_path(@request)
   end
-
 
   private
 
@@ -109,10 +110,6 @@ class BookingsController < ApplicationController
     elsif (Asset.find(params[:asset_id]).user.id == current_user.id)
       flash[:danger] = "You are the owner of this asset."
       redirect_to asset_path(params[:asset_id])
-    
-    elsif Asset.find(params[:asset_id]).requests.find_by(requestor_id: current_user.id)
-      flash[:danger] = "You have aleady requested for this asset."
-      redirect_to asset_path(params[:asset_id])
 
     elsif !current_user.phone_verification_status
       flash[:warning] = "Verify your phone number to request"
@@ -127,4 +124,5 @@ class BookingsController < ApplicationController
       request.requestor_id
     end
   end
+
 end

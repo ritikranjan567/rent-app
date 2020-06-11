@@ -17,3 +17,8 @@
 .right-align{
   float: right;
 }
+
+.notes-container{
+  overflow-y: scroll;
+  max-height: 22rem;
+}

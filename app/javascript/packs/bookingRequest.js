@@ -1,11 +1,23 @@
 var msg = {};
+var dateSets = [];
 var Validator = (function(){
   var _validate_start_date = function(date){
     var input_date = new Date(date);
     var currentDate = new Date();
+    
     if (input_date <= currentDate){
-      msg.start_date = "Starting date can't be less than or equal to current date"
+      msg.start_date = "Starting date can't be less than or equal to current date";
       return false;
+    }
+    else if (dateSets.length > 0){
+      if (isOverlappingBookedEvent(input_date)){
+        msg.start_date = "This place is already booked for given event start date";
+        return false;
+      }
+      else{
+        msg.start_date = "ok"; 
+        return true;
+      }
     }
     else{
       msg.start_date = "ok"
@@ -19,6 +31,16 @@ var Validator = (function(){
     if (startDate > inputDate){
       msg.end_date = "End date can't be less than start date";
       return false;
+    }
+    else if (dateSets.length > 0){
+      if (isOverlappingBookedEvent(inputDate)){
+        msg.end_date = "This place is already booked for given event end date";
+        return false;
+      }
+      else{
+        msg.end_date = "ok"; 
+        return true;
+      }
     }
     else{
       msg.end_date = "ok";
@@ -60,7 +82,9 @@ $(document).on("turbolinks:load", function(){
   /* -------- setting event start date as tommorow's date */
   var nextDay = new Date();
   nextDay.setTime(nextDay.getTime() + (24 * 60 * 60 * 1000));
-  
+  /* set dateSets variable */
+  setDateSets();
+  /* --------------------------- */
   if (document.getElementById("request_event_start_date")){
     document.getElementById("request_event_start_date").value = nextDay.getFullYear() + '-' + ('0' +
     (nextDay.getMonth() + 1)).slice(-2) + '-' + ('0' + nextDay.getDate()).slice(-2);
@@ -75,6 +99,7 @@ $(document).on("turbolinks:load", function(){
   $("#request_event_end_date").on("change", function(){
     requestWarn($(this), Validator.validates_end_date, "end_date"); 
   });
+
 });
 
 function requestButtonManager(){
@@ -86,4 +111,23 @@ function requestButtonManager(){
     }
   }
   request_btn.removeAttr("disabled");
+}
+
+function setDateSets(){
+  var startDatesDivs = document.getElementsByClassName('start-date');
+  var endDateDivs = document.getElementsByClassName('end-date');
+
+  for (var i = 0; i < startDatesDivs.length; i++){
+    dateSets.push([startDatesDivs[i].getAttribute("datetime"), endDateDivs[i].getAttribute("datetime")])
+  }
+}
+
+function isOverlappingBookedEvent(date){
+  var result = dateSets.every(function (pairs) { 
+    var startDate = new Date(pairs[0]);
+    var endDate = new Date(pairs[1]);
+    return (date >= startDate && date <= endDate);
+  });
+
+  return result;
 }

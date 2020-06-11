@@ -6,16 +6,11 @@ class NotesController < ApplicationController
     @note.user = current_user
     if @note.save
       flash[:success] = "Note successfully added"
-      redirect_to notes_path
+      redirect_to show_request_bookings_path(@request)
     else
       flash[:danger] = "Request couldn't be saved"
-      redirect_to notes_path
+      redirect_to show_request_bookings_path(@request)
     end
-  end
-
-  def index
-    @request = Request.find(params[:request_id])
-    @notes = @request.notes  
   end
 
   def destroy
@@ -23,10 +18,10 @@ class NotesController < ApplicationController
     authorize @note
     if @note.destroy
       flash[:success] = 'Note has been successfully deleted.'
-      redirect_to notes_path
+      redirect_to show_request_bookings_path(params[:request_id])
     else
       flash[:error] = 'Unable to delete the request'
-      redirect_to notes_path
+      redirect_to show_request_bookings_path(params[:request_id])
     end
   end
   

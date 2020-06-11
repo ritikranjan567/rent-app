@@ -1,40 +1,69 @@
-<div class="container col-sm-5" id="booking_request_container">
-  <div class="text-center"><h3>Request Booking</h3></div>
-  <% if @request.errors.any? %>
-    <div class="alert alert-danger">
-      <%= "Server detects validation errors" %> <br>
-      <%= show_validation_error(@request, :user_id) %>
-    </div>  
-  <% end %>
-  
-  <%= form_for @request, url: create_request_asset_bookings_path do |f| %>
-    <div class="form-group">
-      <%= f.label :event_name, "Event Name:" %>
-      <%= f.text_field :event_name, class: "form-control", list: "event_tags", required: true %>
-      <div class="feedback-warning"><%= show_validation_error(@request, :event_name) %></div>
-    </div>
+<div class="text-center"><h3>Request Booking</h3></div> <hr>
+<div class="row col-sm-11">
+  <div class="col-sm-7" id="booking_request_container">
+    <% if @request.errors.any? %>
+      <div class="alert alert-danger">
+        <%= "Server detects validation errors" %> <br>
+        <%= show_validation_error(@request, :user_id) %>
+      </div>  
+    <% end %>
+    <h4>For: <%= link_to @request.asset.name, asset_path(@request.asset_id) %> </h4>
+    <div class="highlight"> <h5> <%= "#{@request.asset.currency}#{@request.asset.price} #{@request.asset.payment_period}" %> </h5> </div>
+    <%= form_for @request, url: create_request_asset_bookings_path do |f| %>
+      <div class="form-group">
+        <%= f.label :event_name, "Event Name:" %>
+        <%= f.text_field :event_name, class: "form-control", list: "event_tags", required: true %>
+        <div class="feedback-warning"><%= show_validation_error(@request, :event_name) %></div>
+      </div>
 
-    <div class="form-group">
-      <%= f.label :event_description, "Describe the event:" %>
-      <%= f.text_area :event_description, class: "form-control", rows: 3, required: true %>
-      <div class="feedback-warning"> <%= show_validation_error(@request, :event_description) %> </div>
-    </div>
+      <div class="form-group">
+        <%= f.label :event_description, "Describe the event:" %>
+        <%= f.text_area :event_description, class: "form-control", rows: 3, required: true %>
+        <div class="feedback-warning"> <%= show_validation_error(@request, :event_description) %> </div>
+      </div>
 
-    <div class="form-group">
-      <%= f.label :event_start_date, "Starting date of the event" %>
-      <%= f.date_field :event_start_date, class: "form-control", required: true %>
-      <div class="feedback-warning"><%= show_validation_error(@request, :event_start_date) %></div>
-    </div>
+      <div class="form-group">
+        <%= f.label :event_start_date, "Starting date of the event" %>
+        <%= f.date_field :event_start_date, class: "form-control event-dates", required: true, asset_id: @request.asset_id %>
+        <div class="feedback-warning"><%= show_validation_error(@request, :event_start_date) %></div>
+      </div>
 
-    <div>
-      <%= f.label :event_end_date, "Event Closing date:" %>
-      <%= f.date_field :event_end_date, class: "form-control", required: true %>
-      <div class="feedback-warning"> <%= show_validation_error(@request, :event_end_date) %> </div>
-    </div>
-    <br>
+      <div>
+        <%= f.label :event_end_date, "Event Closing date:" %>
+        <%= f.date_field :event_end_date, class: "form-control event-dates", required: true, asset_id: @request.asset_id %>
+        <div class="feedback-warning"> <%= show_validation_error(@request, :event_end_date) %> </div>
+      </div>
+      <br>
 
-    <%= f.submit "Request", class: "btn btn-primary", id: "request_btn" %>
-  <% end %>
+      <%= f.submit "Request", class: "btn btn-primary", id: "request_btn" %>
+    <% end %>
+  </div>
+
+  <div class="col-sm-5" id="show_booked_dates">
+    <h4>Booked Dates</h4> <hr>
+    <% if @request.asset.accepted_requests.any? %>
+      <% @request.asset.accepted_requests.each do |request| %>
+        Booked For: <h4> <%= request.event_name %> </h4>
+        <div class="show-request-date-container">
+          <div class="start-date ml-4" datetime=<%= request.event_start_date %>>
+            <div class="day"></div>
+            <div class="month"></div>
+            <div class="date"></div>
+            <div class="year"></div>
+          </div>
+          <div class="end-date ml-5" datetime=<%= request.event_end_date %>>
+            <div class="day"></div>
+            <div class="month"></div>
+            <div class="date"></div>
+            <div class="year"></div>
+          </div>
+        </div>
+        <hr>
+      <% end %>
+    <% else %>
+      <h4> This place is not booked for anything yet. </h4>      
+    <% end %>
+  </div>
 </div>
 
 <datalist id="event_tags">

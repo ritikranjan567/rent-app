@@ -1,8 +1,8 @@
 <h3>My wishlist</h3>
 <hr>
 <div class="row">
-  <% if @assets.any? %>
-    <% @assets.each do |wished_asset|  %>
+  <% if @wished_assets.any? %>
+    <% @wished_assets.each do |wished_asset|  %>
       <%= render partial: 'assets/asset', locals: { asset: Asset.find(wished_asset.asset_id) } %>
     <% end %>
     <% else %>

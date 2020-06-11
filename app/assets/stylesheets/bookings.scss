@@ -50,3 +50,28 @@
 .request-rejected{
   color: red;
 }
+
+#show_request_container{
+  border-right: "1px solid #e6ecf5";
+}
+
+.highlight{
+  background-color: rgba(228, 252, 162, 0.952);
+  padding: 0.2rem;
+}
+
+#show_booked_dates{
+  overflow-y: auto;
+  max-height: 48rem;
+}
+
+.show-request-date-container{
+  margin-top: 0.6rem;
+  display: flex;
+}
+
+.inline-style-box{
+  display: inline;
+  background-color: #bfe8f5;
+  padding: 0.3rem;
+}

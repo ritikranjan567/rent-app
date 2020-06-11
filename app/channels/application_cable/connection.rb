@@ -8,13 +8,9 @@ module ApplicationCable
 
     def find_user
       user_id = cookies.signed["user.id"]
-      current_user = User.find(user_id)
-
-      if current_user
-        current_user
-      else
-        reject_unauthorized_connection
-      end
+      current_user = User.find_by(id: user_id)
+      
+      current_user || reject_unauthorized_connection
     end
     
   end
