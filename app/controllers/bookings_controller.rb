@@ -6,11 +6,11 @@ class BookingsController < ApplicationController
   end
 
   def index
-    @bookings = current_user.bookings
+    @assets = current_user.assets_booked_by_user
   end
 
   def booked_assets
-    @assets = current_user.assets.where(available: false)
+    @assets = current_user.booked_assets_of_user
   end
 
   def destroy
@@ -37,7 +37,7 @@ class BookingsController < ApplicationController
   def create_request
     @asset = Asset.find(params[:asset_id])
     @request = @asset.requests.build(request_params)
-    @request.requested_price = @asset.currency + @asset.price.to_s + " " + @asset.payment_period
+    @request.requested_price_info = @asset.currency + @asset.price.to_s + " " + @asset.payment_period
     @request.requestor = current_user
     if @request.save
       flash[:success] = "Request is sent to the owner successfully"
@@ -81,10 +81,9 @@ class BookingsController < ApplicationController
     @booking = @request.build_booking
     @booking.user = @request.requestor
     @booking.asset = @request.asset
-    #@asset.available = false
     @request.request_status = "accepted"
-    @request.reject_other_overlapping_requests(@asset.id)
     ActiveRecord::Base.transaction do
+      @request.reject_other_overlapping_pending_requests
       @request.save!
       @asset.save!
       @booking.save!

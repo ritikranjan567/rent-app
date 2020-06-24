@@ -9,7 +9,7 @@ class Request < ApplicationRecord
   validates :event_description, presence: true, length: {minimum: 20, maximum: 300}
   validates :event_start_date, :event_end_date, presence: true  
   validate :event_start_date_cannot_be_before_today, :event_end_cannot_be_before_start_date
-  validate :event_start_date_cannot_be_in_booked_duration, :event_end_date_cannot_be_in_booked_duration
+  validate :event_start_date_cannot_be_in_booked_duration, :event_end_date_cannot_be_in_booked_duration, on: :create
   after_create :send_new_request_notifications_to_user
   after_update :send_update_notifcations_to_user
 
@@ -21,10 +21,6 @@ class Request < ApplicationRecord
 
   def to_requestor_id
     self.requestor_id
-  end
-
-  def reject_other_overlapping_requests(asset_id)
-    Request.where("asset_id = ? and id != ? and event_start_date < ?", asset_id, self.id, self.event_end_date.to_s).update_all(request_status: 'rejected')
   end
 
   def change_status_to_pending_for_non_expired_requests(asset_id)
@@ -49,14 +45,20 @@ class Request < ApplicationRecord
 
   def event_start_date_cannot_be_in_booked_duration
     errors.add(:event_start_date, "The place is already booked on the given start date") if Request.where("asset_id = ? and" + 
-       "(event_start_date <= ? and event_end_date >= ?) and id != ?",
-       self.asset_id, event_start_date, event_start_date, self.id).any?
+       "(event_start_date <= ? and event_end_date >= ?) and request_status = 'accepted'",
+       self.asset_id, event_start_date, event_start_date).any?
   end
 
   def event_end_date_cannot_be_in_booked_duration
     errors.add(:event_end_date, "The place is already booked on the given end date") if Request.where("asset_id = ? and" + 
-       "(event_start_date <= ? and event_end_date >= ?) and id != ?",
-       self.asset_id, event_end_date, event_end_date, self.id).any?
+       "(event_start_date <= ? and event_end_date >= ?) and request_status = 'accepted'",
+       self.asset_id, event_end_date, event_end_date).any?
+  end
+
+  def reject_other_overlapping_pending_requests
+    Request.where("asset_id = ? and id != ? and request_status = 'pending' and (event_start_date <= ? and event_end_date >= ?)" + 
+    "and (event_start_date <= ? and event_end_date >= ?)", self.asset_id, self.id, self.event_start_date, 
+    self.event_start_date, self.event_end_date, self.event_end_date).update_all(request_status: "rejected")
   end
 
 end

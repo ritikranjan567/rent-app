@@ -71,6 +71,26 @@
  .mg-tp-reg{
    margin-top: 3.3rem;
  }
- 
+
+ @media only screen and (min-width: 500px){
+  #custom_alert{
+    position: fixed;
+    bottom: 1.6rem;
+    right: 5%;
+    max-width: 40%;
+    font-size: 1.2rem;
+    font-weight: bolder;
+  }
+ }
+
+ #custom_alert{
+   position: fixed;
+   bottom: 1.6rem;
+   right: 5%;
+   width: calc(100% - 10%);
+   margin-left: 5%;
+   font-size: 1.2rem;
+   font-weight: bolder;
+ }
 
  

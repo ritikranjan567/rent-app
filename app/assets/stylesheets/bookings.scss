@@ -62,7 +62,7 @@
 
 #show_booked_dates{
   overflow-y: auto;
-  max-height: 48rem;
+  max-height: 33.75rem;
 }
 
 .show-request-date-container{
@@ -74,4 +74,115 @@
   display: inline;
   background-color: #bfe8f5;
   padding: 0.3rem;
+}
+
+.date-highlight{
+  font-style: oblique;
+  color: #8d1669;
+}
+
+.day-highlight{
+  font-weight: bolder;
+  color: #1d58fa;
+}
+
+.border-lt-gray{
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.line-break::after{
+  content: "\A";
+}
+
+.booked-asset-name{
+  font-size: 1.4rem;
+  font-style: oblique;
+  width: fit-content;
+  border-bottom: 2px solid rgb(80, 20, 20);
+  border-right: 2px solid orange;
+  padding-right: 0.4rem;
+  margin-bottom: 0.6rem;
+  font-weight: bolder;
+  padding-bottom: 0.4rem;
+  margin-bottom: 1.4rem;
+}
+
+.asset-icon > img{
+  height: 8rem;
+  width: 8rem;
+}
+
+.display-index{
+  border-radius: 50%;
+  background-color: cornflowerblue;
+  color: wheat;
+  font-size: 1.4rem;
+  font-weight: bolder;
+  text-align: center;
+  padding: 0.6rem;
+}
+
+.booking-info-container{
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  background-color: rgba(228, 252, 162, 0.603);
+}
+.head{
+  margin-bottom: 0.2rem;
+}
+
+.show-booked-dates{
+  width: 100%;
+  display: flex;
+}
+
+.start-date-container{
+  width: 48%;
+  margin-right: 1%;
+}
+.end-date-container{
+  width: 48%;
+  margin-left: 1%;
+}
+.booked-day, .booked-date, .booked-month, .booked-year{
+  text-align: center;
+}
+
+.booked-start-date, .booked-end-date{
+  background-color: rgba(176, 224, 230, 0.459);
+}
+
+.booked-day{
+  font-weight: bolder;
+  color: #421111;
+  background-color: rgb(224, 170, 188);
+  border-top-left-radius: 0.6rem;
+  border-top-right-radius: 0.6rem;
+}
+
+.booked-date{
+  font-size: 2rem;
+}
+
+.booked-year{
+  font-weight: bolder;
+  color: #421111;
+}
+
+.mrg-r{
+  margin-right: 4.4vw;
+}
+
+.number-of-days{
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: orange;
+  text-align: center;
+}
+
+.action-buttons{
+  float: right;
+  margin-right: 0.4rem;
 }

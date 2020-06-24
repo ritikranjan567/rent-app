@@ -1,7 +1,8 @@
 <div class="show-request row">
   <div class="col-sm-9">
-    For: <strong> <%= request.asset.name %> </strong>, By: <em> <%= "#{request.requestor.first_name} #{request.requestor.last_name}" %> </em><br>
-    From: <%= request.event_start_date %>, To: <%= request.event_end_date %> <br>
+    For: <strong> <%= link_to request.asset.name, asset_path(request.asset_id) %> </strong>, By: <em> <%= link_to "#{request.requestor.first_name} #{request.requestor.last_name}", show_user_path(request.requestor_id) %> </em><br>
+    From: <span class="show-date date-highlight" date=<%= request.event_start_date %>></span>, To: <span class="date-highlight" date=<%= request.event_end_date %>></span> <span class="day-highlight"></span> <br>
+    For price: <%= request.requested_price_info %> <br>
     Status: <strong class="request-<%= request.request_status %>"> <%= request.request_status.capitalize %> </strong>
   </div>
   <div class="col-sm-3 text-center">

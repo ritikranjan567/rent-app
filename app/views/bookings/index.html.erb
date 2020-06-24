@@ -1,13 +1,22 @@
-<h3>My Booked Assets</h3>
-<hr>
-<% if @bookings.any? %>
-  <% @bookings.each do |booking| %>
-    <%= render partial: 'assets/asset', locals: {asset: booking.asset} %>
-    <div class="col-sm-3" style="border: 1px solid rgba(0, 0, 0, 0.125);">
-      From: <%= booking.request.event_start_date %> <br>
-      To: <%= booking.request.event_end_date %>
-    </div>
+<div class="col-sm-11">
+  <h3>My Booked Assets</h3>
+  <hr>
+  <% if @assets.any? %>
+      <% @assets.each do |asset| %>
+        <div class="booked-asset-name"> 
+          <span class="asset-icon"> <%= image_tag asset.pictures.first %> </span> 
+          <%= link_to asset.name, asset_path(asset.id) %>
+        </div>
+        <div class="row">
+          <% count = 0%>
+          <% asset.bookings.each do |booking| %>
+            <%= render partial: 'bookings/booking', locals: { booking: booking, count: count }  %>
+            <% count += 1 %>
+          <% end %>
+        </div>
+        <hr>
+      <% end %>
+  <% else %>
+    <h4>You haven't booked for anything yet</h4>  
   <% end %>
-<% else %>
-  <h4>You haven't booked for anything yet</h4>  
-<% end %>
+</div>

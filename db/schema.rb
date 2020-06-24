@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_07_170420) do
+ActiveRecord::Schema.define(version: 2020_06_15_145121) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 2020_06_07_170420) do
     t.date "event_start_date"
     t.date "event_end_date"
     t.integer "requestor_id"
-    t.string "requested_price"
+    t.string "requested_price_info"
     t.index ["asset_id"], name: "index_requests_on_asset_id"
     t.index ["requestor_id"], name: "index_requests_on_requestor_id"
   end

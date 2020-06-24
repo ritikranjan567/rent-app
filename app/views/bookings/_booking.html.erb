@@ -1,0 +1,32 @@
+<div class="booking-info-container col-sm-3 mr-1">
+  <div class="head"> <span class="display-index"> <%= count + 1 %> </span> <strong>Booked by: </strong> <%= link_to "#{booking.user.first_name} #{booking.user.last_name}", show_user_path(booking.user_id) %> </div>
+  <div class="body">
+    <Strong>For Event:</Strong> <span class="highlight fit"> <%= booking.request.event_name %> </span> <br>
+    <strong>Price info:</strong> <%= booking.request.requested_price_info %>
+  </div>
+  <div class="show-booked-dates">
+    <div class="start-date-container">
+      <strong>From:</strong>
+      <div datetime=<%= booking.request.event_start_date %> class="booked-start-date">
+        <div class="booked-day"></div>
+        <div class="booked-date"></div>
+        <div class="booked-month"></div>
+        <div class="booked-year"></div>
+      </div>
+    </div>
+    <div class="end-date-container">
+      <strong>To:</strong>
+      <div datetime=<%= booking.request.event_end_date %> class="booked-end-date">
+        <div class="booked-day"></div>
+        <div class="booked-date"></div>
+        <div class="booked-month"></div>
+        <div class="booked-year"></div>
+      </div>
+    </div>
+  </div>
+  <div class="number-of-days"></div>
+  <div class="action-buttons">
+    <%= link_to('Details', show_request_bookings_path(booking.request_id), class: "btn btn-success btn-sm") %>
+    <%= link_to('Cancel', booking_path(booking.id), method: :delete, class: "btn btn-danger btn-sm") if policy(booking).destroy? %>
+  </div>
+</div>

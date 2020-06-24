@@ -1,6 +1,5 @@
 class NotificationBroadcastJob < ApplicationJob
   queue_as :default
-
   def perform(notification)
     notification_count = Notification.for_user(notification.user_id)
 

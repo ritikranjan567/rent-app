@@ -6,7 +6,7 @@
         <strong> <%= @request.asset.name %> </strong> <% end %>
       </h3>
       <h5> By: <%= link_to "#{@request.requestor.first_name} #{@request.requestor.last_name}", show_user_path(@request.requestor) %> </h5>
-      <div class="highlight"> <h5><%= "#{@request.requested_price}" %></h5> </div>
+      <div class="highlight"> <h5><%= "#{@request.requested_price_info}" %></h5> </div>
     </div>
     <hr>
     <div class="request-body">

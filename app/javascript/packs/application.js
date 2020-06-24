@@ -8,8 +8,9 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 
-require('bootstrap')
+
 require('jquery')
+require('bootstrap')
 require('popper.js')
 require('packs/signup')
 require('packs/createAsset')
@@ -24,7 +25,6 @@ require('packs/bookingRequest')
 // const imagePath = (name) => images(name, true)
 
 $(document).on("turbolinks:load", function(){
-
   /* ------ Animate feeback alert ------------------- */
   if ($("#alert_info").css("display") != "none"){
     $("#content").addClass("mg-tp-sm");

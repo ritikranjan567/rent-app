@@ -100,6 +100,12 @@ $(document).on("turbolinks:load", function(){
     requestWarn($(this), Validator.validates_end_date, "end_date"); 
   });
 
+  /* ------------ show user friendly dates and no of days-------------------------- */
+  $(".show-date").each(displayDate);
+  /* -------------------------------------------------------------------------------- */
+  /* --- User friendly Dates and days for booking details ----------------------*/
+  $(".booking-info-container").each(setNumberOfDaysAndDate);
+  /* ----------------------------------------------------------------------------- */
 });
 
 function requestButtonManager(){
@@ -130,4 +136,49 @@ function isOverlappingBookedEvent(date){
   });
 
   return result;
+}
+
+function displayDate(){
+  var startDateContainer = $(this);
+  var endDateContainer = startDateContainer.next();
+  var startDate = new Date(startDateContainer.attr("date"));
+  var endDate = new Date(endDateContainer.attr("date"));
+
+  startDateContainer.html(startDate.toDateString());
+  endDateContainer.html(endDate.toDateString());
+  var calcNumberOfDays = Math.round((endDate - startDate)/(1000 * 60 * 60 * 24));
+  endDateContainer.next().html('(' + putNumberOfDaysWithSuffix(calcNumberOfDays) + ')');
+}
+
+function putNumberOfDaysWithSuffix(numberOfDays){
+  if (numberOfDays == 0 || numberOfDays == 1){
+    return "1 day";
+  }
+  else if (numberOfDays > 1){
+    return numberOfDays + " days";
+  }
+}
+
+function setNumberOfDaysAndDate(){
+  var startDateContainer = $(this).find(".booked-start-date");
+  var endDateContainer = $(this).find(".booked-end-date");
+
+  var startDate = new Date(startDateContainer.attr("datetime"));
+  var endDate = new Date(endDateContainer.attr("datetime"));
+
+  var startDateArray = startDate.toDateString().split(' ');
+  var endDateArray = endDate.toDateString().split(' ');
+
+  startDateContainer.find(".booked-day").html(startDateArray[0]);
+  startDateContainer.find(".booked-date").html(startDateArray[2]);
+  startDateContainer.find(".booked-month").html(startDateArray[1]);
+  startDateContainer.find(".booked-year").html(startDateArray[3]);
+
+  endDateContainer.find(".booked-day").html(endDateArray[0]);
+  endDateContainer.find(".booked-date").html(endDateArray[2]);
+  endDateContainer.find(".booked-month").html(endDateArray[1]);
+  endDateContainer.find(".booked-year").html(endDateArray[3]);
+
+  var calcNumberOfDays = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+  $(this).find(".number-of-days").html(putNumberOfDaysWithSuffix(calcNumberOfDays)); 
 }

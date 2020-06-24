@@ -1,10 +1,10 @@
 module ApplicationHelper
 
   def key_convert(key)
-    respective_val = {notice: "info", alert: "warning"}
+    respective_val = {notice: "info", alert: "warning" }
     if (flash[key].include? "success")
       "success"
-    elsif respective_val.include? key
+    elsif respective_val.include? key.to_sym
       respective_val[key.to_sym]
     else
       key.to_s

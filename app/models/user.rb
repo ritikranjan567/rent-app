@@ -15,4 +15,12 @@ class User < ApplicationRecord
 
   has_many :notifications, dependent: :destroy
   delegate :wished_assets, to: :wishlist
+
+  def assets_booked_by_user
+    Asset.joins(:bookings).distinct("assets.id").where("bookings.user_id = ?", self.id)
+  end
+
+  def booked_assets_of_user
+    Asset.joins(:bookings).distinct("assets.user_id").where("assets.user_id = ?", self.id)
+  end
 end
