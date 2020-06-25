@@ -25,6 +25,7 @@ require('packs/bookingRequest')
 // const imagePath = (name) => images(name, true)
 
 $(document).on("turbolinks:load", function(){
+  let alertBox = require('./alertBox');
   /* ------ Animate feeback alert ------------------- */
   if ($("#alert_info").css("display") != "none"){
     $("#content").addClass("mg-tp-sm");
@@ -51,18 +52,18 @@ $(document).on("turbolinks:load", function(){
   /* -------------------------------------------------------------- */
   /* --------- Displaying date --------------------- */
   if ($(".start-date")){
-    var calenderContianer = $(".start-date");
-    var dateData = new Date(calenderContianer.attr("datetime"));
-    var dateArray = dateData.toDateString().split(" ");
+    const calenderContianer = $(".start-date");
+    let dateData = new Date(calenderContianer.attr("datetime"));
+    let dateArray = dateData.toDateString().split(" ");
     calenderContianer.find(".day").text(dateArray[0]);
     calenderContianer.find(".month").text(dateArray[1]);
     calenderContianer.find(".date").text(dateArray[2]);
     calenderContianer.find(".year").text(dateArray[3]);
   }
   if ($(".end-date")){
-    var calenderContianer = $(".end-date");
-    var dateData = new Date(calenderContianer.attr("datetime"));
-    var dateArray = dateData.toDateString().split(" ");
+    const calenderContianer = $(".end-date");
+    let dateData = new Date(calenderContianer.attr("datetime"));
+    let dateArray = dateData.toDateString().split(" ");
     calenderContianer.find(".day").text(dateArray[0]);
     calenderContianer.find(".month").text(dateArray[1]);
     calenderContianer.find(".date").text(dateArray[2]);
@@ -71,25 +72,25 @@ $(document).on("turbolinks:load", function(){
   /* -------------------------------------------------------- */
   /* ------------- Filters Radio button ----------------------------- */
   $("input[name='sort_by']").on("click", function(){
-    var coords = [];
-    var radio_element = $(this);
-    var dist = $("#distance_value");
+    let coords = [];
+    const radio_element = $(this);
+    let dist = $("#distance_value");
     if (radio_element.val() == "distance"){
       dist.attr("disabled", false);
-      if (navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(function(position){
+      if (navigator.geolocation){        
+        navigator.geolocation.getCurrentPosition(function(position){          
           coords.push(Number(position.coords.latitude), Number(position.coords.longitude));
           sendFilterData("distance", coords, dist.val());
           dist.on("input", function(){
             sendFilterData("distance", coords, $(this).val());
           });
         }, function(error){
-          if (error.code == error.PERMISSION_DENIED)
-            alert("Permission denied. There will be no result");
+          if (error.code === error.PERMISSION_DENIED)
+            alertBox.methods.showAlert("WARNING", "You have blocked access to your location. Incorrect results maybe displayed.");
         });
       }
       else{
-        alert("Browser does't support geolocation feature");
+        alertBox.methods.showAlert("ERROR", "Browser doesn't support geolocation services.");
       }
     }
     else{
@@ -99,7 +100,7 @@ $(document).on("turbolinks:load", function(){
   });
   /* --------------------------------------------------------------------- */
   /* --------------  display number of unviewed notifications ------------------------------- */
-  var number_container = $("#unviewed_notifications");
+  const number_container = $("#unviewed_notifications");
   if (number_container.attr("unviewed_count") > 0){
     number_container.css("display", "block");
     number_container.text(number_container.attr("unviewed_count"));
@@ -116,10 +117,10 @@ function sendFilterData(sortBy, coords = [], distanceVal = 0){
     type: "get",
     data: { sort_by: sortBy, coordinates: coords, distance: distanceVal },
     success: function(data) { 
-      var assets_container = $("#show_assets_cards");
+      const assets_container = $("#show_assets_cards");
       assets_container.children().remove();
       assets_container.append(data);         
     },
-    error: function() {  console.log("some error occured"); } 
+    error: function(error) {  console.log(error); } 
   });
 }

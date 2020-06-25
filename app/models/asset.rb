@@ -19,4 +19,9 @@ class Asset < ApplicationRecord
   def accepted_requests
     self.requests.where(request_status: 'accepted')
   end
+
+  def self.search(search_text)
+    joins(:location).where("assets.name like ? or assets.event_tags like ? or locations.place like ? or locations.city like ?",
+       "%#{search_text}%", "%#{search_text}%", "%#{search_text}%", "%#{search_text}%")
+  end
 end

@@ -1,11 +1,8 @@
 module AssetsHelper
   #for image crousel activity
-  def active_class(ind)
-    if (ind == 0)
-      "active"
-    else
-      ""
-    end
+  def active_class(index)
+    return "active" if index.eql? 0
+    ""
   end
 
   def display_avg_rating(asset)
@@ -35,10 +32,6 @@ module AssetsHelper
     Asset.where("event_tags like ?", "%#{input_text}%").pluck(:event_tags).flatten.uniq + 
     Location.where("place like ?", "%#{input_text}%").pluck(:place).uniq + 
     Location.where("city like ?", "%#{input_text}%").pluck(:city).uniq 
-  end
-
-  def search_result(search_text)
-    Asset.joins(:location).where("assets.name like ? or assets.event_tags like ? or locations.place like ? or locations.city like ?", "%#{search_text}%", "%#{search_text}%", "%#{search_text}%", "%#{search_text}%")
   end
 
   def create_or_assign_wishlist

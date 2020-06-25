@@ -12,7 +12,7 @@ $(document).on("turbolinks:load", function(){
     $("#rating_score").val($(this).attr("id"));    
   });
 
-  var starDisplay = document.getElementsByClassName("display-stars");
+  const starDisplay = document.getElementsByClassName("display-stars");
   
   if(starDisplay.length > 0){
     for (j = 0; j < starDisplay.length; j++){

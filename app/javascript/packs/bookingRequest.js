@@ -1,6 +1,16 @@
 var msg = {};
 var dateSets = [];
 var Validator = (function(){
+  var _validate_event_name = function(name){
+    if (name.length < 1){
+      msg.event_name = "Event name is required";
+      return false;
+    }
+    else{
+      msg.event_name = "ok";
+      return true;
+    }
+  };
   var _validate_start_date = function(date){
     var input_date = new Date(date);
     var currentDate = new Date();
@@ -62,14 +72,15 @@ var Validator = (function(){
   return {
     validates_start_date: _validate_start_date,
     validates_end_date: _validate_end_date,
-    validates_event_description: _validate_event_description
+    validates_event_description: _validate_event_description,
+    validates_event_name: _validate_event_name
   };
 })();
 
 function requestWarn(element, validatorFunction, messageType){
   if (!validatorFunction(element.val())){
     element.css("border", "0.165rem solid red");
-    element.next().css({"display": "block", "color": "red"}).text(msg[messageType]);
+    element.next().addClass("block-red").text(msg[messageType]);
   }
   else{
     element.next().text("");
@@ -80,16 +91,21 @@ function requestWarn(element, validatorFunction, messageType){
 
 $(document).on("turbolinks:load", function(){
   /* -------- setting event start date as tommorow's date */
-  var nextDay = new Date();
+  let nextDay = new Date();
   nextDay.setTime(nextDay.getTime() + (24 * 60 * 60 * 1000));
   /* set dateSets variable */
   setDateSets();
   /* --------------------------- */
-  if (document.getElementById("request_event_start_date")){
-    document.getElementById("request_event_start_date").value = nextDay.getFullYear() + '-' + ('0' +
+  let startDateInput = $("#request_event_start_date");
+  if (startDateInput.length !== 0){
+    let nextDateVal = nextDay.getFullYear() + '-' + ('0' +
     (nextDay.getMonth() + 1)).slice(-2) + '-' + ('0' + nextDay.getDate()).slice(-2);
+    startDateInput.val(nextDateVal);
   }
   /* ------------------------------------------------------------- */
+  $("#request_event_name").on("keyup", function(){
+    requestWarn($(this), Validator.validates_event_name, "event_name");
+  });
   $("#request_event_description").on("keyup", function(){
     requestWarn($(this), Validator.validates_event_description, "event_description");
   });
@@ -109,7 +125,7 @@ $(document).on("turbolinks:load", function(){
 });
 
 function requestButtonManager(){
-  var request_btn = $("#request_btn");
+  const request_btn = $("#request_btn");
   for (const prop in msg){
     if (msg[prop] != "ok"){
       request_btn.attr("disabled", true);
@@ -123,15 +139,15 @@ function setDateSets(){
   var startDatesDivs = document.getElementsByClassName('start-date');
   var endDateDivs = document.getElementsByClassName('end-date');
 
-  for (var i = 0; i < startDatesDivs.length; i++){
+  for (let i = 0; i < startDatesDivs.length; i++){
     dateSets.push([startDatesDivs[i].getAttribute("datetime"), endDateDivs[i].getAttribute("datetime")])
   }
 }
 
 function isOverlappingBookedEvent(date){
   var result = dateSets.every(function (pairs) { 
-    var startDate = new Date(pairs[0]);
-    var endDate = new Date(pairs[1]);
+    let startDate = new Date(pairs[0]);
+    let endDate = new Date(pairs[1]);
     return (date >= startDate && date <= endDate);
   });
 
@@ -139,14 +155,14 @@ function isOverlappingBookedEvent(date){
 }
 
 function displayDate(){
-  var startDateContainer = $(this);
-  var endDateContainer = startDateContainer.next();
-  var startDate = new Date(startDateContainer.attr("date"));
-  var endDate = new Date(endDateContainer.attr("date"));
+  const startDateContainer = $(this);
+  const endDateContainer = startDateContainer.next();
+  let startDate = new Date(startDateContainer.attr("date"));
+  let endDate = new Date(endDateContainer.attr("date"));
 
   startDateContainer.html(startDate.toDateString());
   endDateContainer.html(endDate.toDateString());
-  var calcNumberOfDays = Math.round((endDate - startDate)/(1000 * 60 * 60 * 24));
+  let calcNumberOfDays = Math.round((endDate - startDate)/(1000 * 60 * 60 * 24));
   endDateContainer.next().html('(' + putNumberOfDaysWithSuffix(calcNumberOfDays) + ')');
 }
 
@@ -160,14 +176,14 @@ function putNumberOfDaysWithSuffix(numberOfDays){
 }
 
 function setNumberOfDaysAndDate(){
-  var startDateContainer = $(this).find(".booked-start-date");
-  var endDateContainer = $(this).find(".booked-end-date");
+  const startDateContainer = $(this).find(".booked-start-date");
+  const endDateContainer = $(this).find(".booked-end-date");
 
-  var startDate = new Date(startDateContainer.attr("datetime"));
-  var endDate = new Date(endDateContainer.attr("datetime"));
+  let startDate = new Date(startDateContainer.attr("datetime"));
+  let endDate = new Date(endDateContainer.attr("datetime"));
 
-  var startDateArray = startDate.toDateString().split(' ');
-  var endDateArray = endDate.toDateString().split(' ');
+  let startDateArray = startDate.toDateString().split(' ');
+  let endDateArray = endDate.toDateString().split(' ');
 
   startDateContainer.find(".booked-day").html(startDateArray[0]);
   startDateContainer.find(".booked-date").html(startDateArray[2]);
@@ -179,6 +195,6 @@ function setNumberOfDaysAndDate(){
   endDateContainer.find(".booked-month").html(endDateArray[1]);
   endDateContainer.find(".booked-year").html(endDateArray[3]);
 
-  var calcNumberOfDays = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
+  let calcNumberOfDays = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24));
   $(this).find(".number-of-days").html(putNumberOfDaysWithSuffix(calcNumberOfDays)); 
 }

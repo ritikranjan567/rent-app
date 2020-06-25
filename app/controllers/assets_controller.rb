@@ -9,7 +9,7 @@ class AssetsController < ApplicationController
 
   def index
     if params[:search]
-      @assets = search_result(params[:search])
+      @assets = Asset.search(params[:search])
     else
       @assets = Asset.latest_available
     end

@@ -2,13 +2,13 @@ var message = {};  //for error messages
 var AssetValidator = (function(){
   var _validateAssetName = function(name){
     
-    var regex =  /^[a-zA-Z' ]{3,30}$/;
+    let regex =  /^[a-zA-Z][a-zA-Z' ]{3,30}$/;
     if (name.length == 0){
       message.assetName = "Please Name your place..";
       return false;
     }
     else if (!regex.test(name)){
-      message.assetName = "Invalid name";
+      message.assetName = "Invalid name (Start with charecter and minimum 4 charecters)";
       return false;
     }
     else{
@@ -17,13 +17,13 @@ var AssetValidator = (function(){
     }
   };
   var _validateDimension = function(dimension){
-    var regex = /^[0-9]{1,3}[a-zA-z.]{1,10} [x|X] [0-9]{1,3}[a-zA-z.]{1,10}/;
+    let regex = /^[0-9]{1,3}[a-zA-z.]{1,10} [x|X] [0-9]{1,3}[a-zA-z.]{1,10}/;
     if (dimension.length == 0){
       message.assetDimension = "Please enter a valid dimension";
       return false;
     }
     else if (!regex.test(dimension)){
-      message.assetDimension = "Unsupported dimension formate";
+      message.assetDimension = "Unsupported dimension formate (try follow given example)";
       return false;
     }
     else{
@@ -48,8 +48,8 @@ var AssetValidator = (function(){
       message.assetPrice = "Enter the price please";
       return false;
     }    
-    else if (!(/^[0-9]{1,10}$/.test(price))){
-      message.assetPrice = "Enter valid price";
+    else if (!(/^[0-9][0-9]{1,10}$/.test(price))){
+      message.assetPrice = "Enter valid price (Enter numbers only)";
       return false;
     }
     else{
@@ -59,13 +59,13 @@ var AssetValidator = (function(){
   };
 
   var _validateLocationText = function(text){
-    var regex = /^[a-zA-Z ]{3,30}$/;
+    let regex = /^[a-zA-Z][a-zA-Z ]{2,30}$/;
     if (text.length == 0){
       message.location = "Enter required location data";
       return false;
     }
     else if (!regex.test(text)){
-      message.location = "Invalid formate";
+      message.location = "Invalid formate (start with a charecter and enter minimum 3 charecters)";
       return false;
     }
     else{
@@ -75,13 +75,13 @@ var AssetValidator = (function(){
   };
 
   var _validatePincode = function(pincode){
-    var regex =  /^[0-9]{2,20}$/;
+    let regex =  /^[0-9][0-9]{2,20}$/;
     if (pincode.length == 0){
       message.pincode = "Enter pincode";
       return false;
     }
     else if (!regex.test(pincode)){
-      message.pincode = "Invalid formate";
+      message.pincode = "Invalid formate(Enter numbers only)";
       return false;
     }
     else{
@@ -119,7 +119,7 @@ var AssetValidator = (function(){
 
 function showWarn(element, errorType, validationFunction){
   postButtonManager();
-  var valStatus = validationFunction(element.val());
+  let valStatus = validationFunction(element.val());
   if (!valStatus){
     element.css("border", "2px solid red");
     element.parent().children("div.feedback-warning").text(message[errorType]).css("display", "block");
@@ -133,7 +133,7 @@ function showWarn(element, errorType, validationFunction){
 function readImage() {
   postButtonManager();
   var files = event.target.files;
-  var preview = $(".preview-images");
+  const preview = $(".preview-images");
   preview.children().remove();
   if (files.length > 6){
     message.pictures = "Please limit your uplaods upto 6 pictures";
@@ -145,7 +145,7 @@ function readImage() {
     preview.next().text("");
   }
   for(i = 0; i < files.length; i++){
-    var file = files[i];
+    let file = files[i];
 
     var picReader = new FileReader();
 
@@ -172,9 +172,9 @@ $(document).on("turbolinks:load", function(){
   /* ---------Event tags management-------------------------------------- */
   //----------- adding tag --------------------------------------------
   $("#add_tags").on("click", function(){
-    var input = $("#add_asset_tags");
-    var event_tags = $("#event_tags")
-    var viewTags = $(".view-event-tags");
+    const input = $("#add_asset_tags");
+    const event_tags = $("#event_tags")
+    const viewTags = $(".view-event-tags");
     var html = '<div class="event-tags bg-warning">' + 
                   input.val() +
                   '<span class="remove-event-tag fa fa-times"></span>' +
@@ -189,16 +189,16 @@ $(document).on("turbolinks:load", function(){
   //---------------------------------------------------------------------
   //-----Removing tags-------------------------------------------------------
   $(document).on("click",".remove-event-tag", function(){
-    var event_tags = $("#event_tags");
+    const event_tags = $("#event_tags");
     event_tags.val(event_tags.val().replace(($(this).parent().text() + ","), ""));
-    console.log(event_tags.val());
+    //console.log(event_tags.val());
 
     $(this).parent().remove();
   });
   //------------------------------------------------------------------------------
   //------------ validate tag input ---------------------------------------------------
   $("#add_asset_tags").on("keyup", function(){
-    var addBtn = $("#add_tags");
+    const addBtn = $("#add_tags");
     
     if(AssetValidator.tagsValidator($(this).val()))
       addBtn.removeAttr("disabled");
